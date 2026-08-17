@@ -27,6 +27,12 @@ from .remediation import (
     RemediationOutput,
     build_remediation_prompt,
 )
+from .legal_audit import (
+    LegalAuditOrchestrator,
+    LegalAuditRequestInput,
+    AuditReport,
+    AuditMode,
+)
 
 if TYPE_CHECKING:
     pass
@@ -366,6 +372,7 @@ class CLOAgent:
                 "explain_decision",
                 "chat_dpdp_assistant",
                 "get_agent_status",
+                "run_legal_audit",
             ],
         }
 
@@ -435,6 +442,71 @@ class CLOAgent:
             "request_id": request_id,
             "latency_ms": latency_ms,
         }
+
+    async def run_legal_audit(
+        self,
+        session: Any,
+        request: LegalAuditRequestInput,
+        user_id: str | None = None,
+    ) -> AuditReport:
+        """Run a full legal audit by orchestrating existing MCP tools.
+
+        Args:
+            session: Database session for audit logging.
+            request: Structured or natural-language audit request.
+            user_id: Optional user identifier for audit trail.
+
+        Returns:
+            Structured AuditReport with findings, risk summary,
+            prioritized actions, and final recommendation.
+        """
+        request_id = str(uuid.uuid4())
+        start = time.perf_counter()
+
+        orchestrator = LegalAuditOrchestrator(agent=self, session=session)
+
+        try:
+            report, _trace = await orchestrator.run(request)
+            latency_ms = int((time.perf_counter() - start) * 1000)
+
+            # Write audit record for the full audit
+            risk_exposure = report.risk_summary.get("CRITICAL") or report.risk_summary.get("HIGH") if isinstance(report.risk_summary, dict) else None
+
+            await self._write_audit(
+                session=session,
+                request_id=request_id,
+                decision_id=report.audit_id,
+                tool_name="run_legal_audit",
+                input_summary=f"Legal audit: {request.business_context[:200]}" if request.business_context else "Legal audit",
+                input_data=request.model_dump(exclude_none=True),
+                retrieved_sources=[],
+                output_summary=f"audit_id={report.audit_id}, "
+                f"findings={len(report.findings)}, "
+                f"recommendation={report.final_recommendation}",
+                exposure_level=risk_exposure,
+                confidence=report.confidence,
+                latency_ms=latency_ms,
+                user_id=user_id,
+                prompt="run_legal_audit (orchestrator)",
+            )
+
+            logger.info(
+                "clo_agent.legal_audit_complete",
+                audit_id=report.audit_id,
+                finding_count=len(report.findings),
+                recommendation=report.final_recommendation,
+                latency_ms=latency_ms,
+            )
+
+            return report
+
+        except Exception as exc:
+            logger.error(
+                "clo_agent.legal_audit_failure",
+                request_id=request_id,
+                error=str(exc),
+            )
+            raise
 
     # ─── Internal helpers ────────────────────────────────────────────────────
 

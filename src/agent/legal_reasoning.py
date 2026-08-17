@@ -27,6 +27,14 @@ class DecisionOutput(BaseModel):
     decision_id: str = ""
     priority_rank: int = Field(default=1, ge=1, le=10, description="1=highest priority")
     exposure_level: str = Field(default="HIGH")
+
+    @field_validator("exposure_level")
+    @classmethod
+    def validate_exposure_level(cls, v: str) -> str:
+        allowed = {"CRITICAL", "HIGH", "MEDIUM", "LOW"}
+        if v.upper() not in allowed:
+            raise ValueError(f"exposure_level must be one of {allowed}, got {v}")
+        return v.upper()
     legal_rationale: str = Field(default="", max_length=15000)
     actionable_steps_array: list[str] = Field(default_factory=list)
     legal_sources: list[LegalSource] = Field(default_factory=list)

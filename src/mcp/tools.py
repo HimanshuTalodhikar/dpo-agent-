@@ -291,6 +291,73 @@ CHAT_DPDP_ASSISTANT_TOOL = {
     },
 }
 
+RUN_LEGAL_AUDIT_TOOL = {
+    "name": "run_legal_audit",
+    "description": (
+        "Orchestrate a full legal audit for a business scenario. "
+        "This high-level tool analyzes business activities, identifies applicable "
+        "Indian legal requirements (DPDP Act, IT Act, CERT-In, etc.), retrieves "
+        "legal evidence from the knowledge graph, assesses compliance risks, "
+        "prioritizes findings, generates remediation recommendations, "
+        "and produces a structured audit report with a final recommendation "
+        "(APPROVE / APPROVE_WITH_CONDITIONS / DO_NOT_APPROVE). "
+        "Supports natural-language business context or structured input. "
+        "Jurisdiction: India only."
+    ),
+    "inputSchema": {
+        "type": "object",
+        "properties": {
+            "business_context": {
+                "type": "string",
+                "description": (
+                    "Natural-language description of the business activity, scenario, "
+                    "or architecture being audited. Can also be a full structured "
+                    "description. (required if no structured fields provided)"
+                ),
+                "minLength": 10,
+                "maxLength": 8000,
+            },
+            "objective": {
+                "type": "string",
+                "description": "Specific audit objective if different from business_context",
+            },
+            "organization_type": {
+                "type": "string",
+                "description": "Type of organization (e.g. 'fintech', 'healthcare', 'ecommerce', 'startup')",
+            },
+            "industry": {
+                "type": "string",
+                "description": "Industry sector (e.g. 'financial_services', 'health', 'retail')",
+            },
+            "data_involved": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Types of personal data involved (e.g. ['Aadhaar', 'PAN', 'biometric'])",
+            },
+            "systems_involved": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Systems or infrastructure (e.g. ['AWS Singapore', 'third-party CRM'])",
+            },
+            "processing_activities": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Data processing activities (e.g. ['collection', 'storage', 'transfer', 'deletion'])",
+            },
+            "mode": {
+                "type": "string",
+                "enum": ["quick_review", "risk_assessment", "full_audit"],
+                "description": "Depth of the audit. Defaults to 'full_audit'",
+                "default": "full_audit",
+            },
+            "user_id": {
+                "type": "string",
+                "description": "Optional identifier for audit logging",
+            },
+        },
+    },
+}
+
 ALL_TOOLS = [
     ANALYZE_LEGAL_RISK_TOOL,
     PRIORITIZE_RISK_TOOL,
@@ -300,6 +367,7 @@ ALL_TOOLS = [
     SEARCH_KNOWLEDGE_GRAPH_TOOL,
     INGEST_DOCUMENT_TOOL,
     CHAT_DPDP_ASSISTANT_TOOL,
+    RUN_LEGAL_AUDIT_TOOL,
 ]
 
 

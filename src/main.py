@@ -370,6 +370,24 @@ async def call_tool(
                 "result": _agent.get_status(),
             })
 
+        elif tool_name == "run_legal_audit":
+            from .agent.legal_audit import LegalAuditRequestInput
+            req = LegalAuditRequestInput(**body)
+            session = await get_session()
+            try:
+                report = await _agent.run_legal_audit(
+                    session=session,
+                    request=req,
+                    user_id=body.get("user_id"),
+                )
+                return JSONResponse({
+                    "success": True,
+                    "tool": tool_name,
+                    "result": report.model_dump(mode="json"),
+                })
+            finally:
+                await session.close()
+
         elif tool_name == "search_knowledge_graph":
             if _graph_service is None:
                 raise HTTPException(status_code=503, detail="Graph service not initialized")

@@ -5,6 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import json
 
 from src.agent.clo_agent import CLOAgent
+from src.agent.legal_audit import LegalAuditRequestInput, AuditMode, FinalRecommendation
 from src.retrieval.vector_store import RetrievalResult, RetrievedChunk
 from src.llm.mock import MockLLMProvider
 from src.embedding.mock import MockEmbeddingProvider
@@ -246,4 +247,131 @@ class TestMCPEndpoints:
             "generate_remediation",
             "explain_decision",
             "get_agent_status",
+            "chat_dpdp_assistant",
+            "run_legal_audit",
         }
+
+
+@pytest.mark.integration
+class TestLegalAuditEndpoint:
+    """Integration tests for run_legal_audit MCP tool."""
+
+    @pytest.mark.asyncio
+    async def test_run_legal_audit_quick_review(self):
+        """Quick review mode — calls chat only."""
+        mock_llm = MockLLMProvider()
+        mock_retriever = AsyncMock()
+        mock_session = AsyncMock()
+        mock_session.execute = AsyncMock()
+        mock_session.commit = AsyncMock()
+        mock_session.close = AsyncMock()
+
+        agent = CLOAgent(llm_provider=mock_llm, retriever=mock_retriever)
+
+        req = LegalAuditRequestInput(
+            business_context="Brief review: employee monitoring in India",
+            mode=AuditMode.QUICK_REVIEW,
+        )
+
+        with patch("src.storage.audit.write_audit_record"):
+            result = await agent.run_legal_audit(
+                session=mock_session,
+                request=req,
+            )
+
+        assert result is not None
+        assert result.mode == AuditMode.QUICK_REVIEW
+        assert result.audit_id is not None
+
+    @pytest.mark.asyncio
+    async def test_run_legal_audit_full_audit(self):
+        """Full audit mode — all tools orchestrated."""
+        mock_llm = MockLLMProvider()
+        mock_retriever = AsyncMock()
+        mock_retriever.retrieve_for_risk_analysis = AsyncMock(
+            return_value=RetrievalResult(
+                query=None,
+                chunks=[
+                    RetrievedChunk(
+                        chunk_id="chunk-001",
+                        document_id="DPDP-ACT-2023",
+                        legal_doc_id="DPDP-ACT-2023",
+                        chunk_index=0,
+                        content="Section 16: Notice. Every Data Fiduciary shall, before collecting... ",
+                        section="Section 16 - Notice",
+                        section_ref="Section 16",
+                        title="Notice Requirement",
+                        law_type="DPDP Act",
+                        jurisdiction="India",
+                        domain="consent",
+                        effective_date=None,
+                        source_url=None,
+                        similarity=0.92,
+                        token_count=120,
+                    ),
+                ],
+            )
+        )
+        mock_session = AsyncMock()
+        mock_session.execute = AsyncMock()
+        mock_session.commit = AsyncMock()
+        mock_session.close = AsyncMock()
+
+        agent = CLOAgent(llm_provider=mock_llm, retriever=mock_retriever)
+
+        req = LegalAuditRequestInput(
+            business_context="Fintech startup storing Aadhaar and PAN on AWS Singapore",
+            organization_type="fintech",
+            industry="financial_services",
+            data_involved=["Aadhaar", "PAN"],
+            systems_involved=["AWS Singapore"],
+            mode=AuditMode.FULL_AUDIT,
+        )
+
+        with patch("src.storage.audit.write_audit_record"):
+            report = await agent.run_legal_audit(
+                session=mock_session,
+                request=req,
+            )
+
+        assert report is not None
+        assert report.audit_id is not None
+        assert report.business_context is not None
+        assert isinstance(report.findings, list)
+        assert report.risk_summary is not None
+        assert report.final_recommendation in [
+            FinalRecommendation.APPROVE,
+            FinalRecommendation.APPROVE_WITH_CONDITIONS,
+            FinalRecommendation.DO_NOT_APPROVE,
+        ]
+
+    @pytest.mark.asyncio
+    async def test_run_legal_audit_invalid_input(self):
+        """Invalid input is rejected at the schema level."""
+        from pydantic import ValidationError
+        from src.agent.legal_audit import LegalAuditRequestInput
+
+        with pytest.raises(ValidationError):
+            LegalAuditRequestInput(business_context="ab")  # too short
+
+    @pytest.mark.asyncio
+    async def test_run_legal_audit_natural_language_extraction(self):
+        """Natural-language business_context is parsed correctly."""
+        req = LegalAuditRequestInput(
+            business_context="Our Indian fintech startup stores customer Aadhaar and PAN "
+            "verification data on an AWS server in Singapore. Review whether we can proceed."
+        )
+        assert req.business_context is not None
+        assert req.mode == AuditMode.FULL_AUDIT  # default
+        assert req.data_involved == []  # extraction would happen in orchestrator
+
+    def test_run_legal_audit_tool_in_all_tools(self):
+        """run_legal_audit is registered in ALL_TOOLS."""
+        from src.mcp.tools import ALL_TOOLS, get_tool_by_name
+
+        tool = get_tool_by_name("run_legal_audit")
+        assert tool is not None
+        assert tool["name"] == "run_legal_audit"
+        assert "inputSchema" in tool
+        assert "properties" in tool["inputSchema"]
+        assert "mode" in tool["inputSchema"]["properties"]
