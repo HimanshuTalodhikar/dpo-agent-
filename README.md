@@ -1,33 +1,33 @@
-# CLO MCP Server — Chief Legal Officer AI Agent Platform
+# DPO Agent — Data Protection Officer AI Agent Platform
 
-> Phase 1: Government Legal Knowledge Base + CLO Agent + Amazon Bedrock
+> Phase 1: Government Legal & Privacy Knowledge Base + DPO Agent + Multi-LLM / Bedrock RAG
 
 ## Overview
 
-The CLO MCP Server is an autonomous legal intelligence platform where a Chief Legal Officer AI Agent runs inside an MCP (Model Context Protocol) service, backed by a government/legal knowledge base.
+The **DPO Agent** is an autonomous legal & data protection intelligence platform where a Data Protection Officer (DPO) AI Agent runs inside an MCP (Model Context Protocol) service, backed by a comprehensive government legal and privacy knowledge base (DPDP Act, GDPR, CERT-In, IT Act, etc.).
 
 ```
-MCP Client
+MCP Client / Frontend UI
     ↓
-CLO MCP Server (ECS/Fargate)
+DPO Agent Server (FastAPI + MCP)
     ↓
-CLO Agent
+DPO Agent Orchestrator
     ↓
-Legal Retrieval → Aurora pgvector
+Legal Retrieval → Aurora pgvector / Zep GraphRAG / Neptune
     ↓
-Amazon Bedrock (Claude 3.5 Sonnet + Titan)
+LLM Provider (Claude / Bedrock / Codemax)
     ↓
-Structured CLO Decision + Audit Record
+Structured Risk Analysis + Remediation + Audit Record
 ```
 
 ## Features
 
 - **5 MCP Tools**: `analyze_legal_risk`, `prioritize_risk`, `generate_remediation`, `explain_decision`, `get_agent_status`
-- **Government Legal Knowledge Base**: GDPR, CCPA, HIPAA, Title VII, OSHA, UCC Article 2
-- **Source-Grounded Reasoning**: Every decision cites specific statutes and regulations
+- **Comprehensive Privacy & Legal Knowledge Base**: DPDP Act 2023 & Rules 2025, GDPR, CERT-In Directions, IT Act, CCPA, HIPAA
+- **Source-Grounded Reasoning**: Every decision cites specific statutes, sections, and regulations
 - **Fully Auditable**: Every call writes an audit record with request/decision IDs, retrieved sources, LLM prompt hash, and latency
 - **Prompt Injection Protection**: Retrieved documents are sanitized before passing to the LLM
-- **AWS-Only Production Stack**: Bedrock, Aurora pgvector, S3, ECS/Fargate, Secrets Manager, KMS
+- **Production Stack**: Bedrock / Codemax LLM, Aurora pgvector / Zep GraphRAG, S3, ECS/Fargate, Terraform Infra
 
 ## Quick Start
 
@@ -35,13 +35,13 @@ Structured CLO Decision + Audit Record
 
 - Docker & Docker Compose
 - Python 3.12+ (for local development outside Docker)
-- AWS credentials (for production deployment)
+- AWS credentials / API keys (configured in `.env`)
 
 ### 1. Clone & Start
 
 ```bash
-git clone <repo-url>
-cd cloagent
+git clone https://github.com/HimanshuTalodhikar/dpo-agent-.git
+cd dpo-agent-
 
 # Copy environment file
 cp .env.example .env
@@ -60,28 +60,28 @@ curl http://localhost:8000/health
 curl http://localhost:8000/mcp/tools
 ```
 
-### 2. Run a Legal Risk Analysis
+### 2. Run a Data Protection & Legal Risk Analysis
 
 ```bash
 curl -X POST http://localhost:8000/mcp/tools/analyze_legal_risk/call \
   -H "Content-Type: application/json" \
   -d '{
-    "query": "We discovered a data breach affecting 10,000 EU customers. What are our obligations?",
-    "jurisdiction": "EU",
-    "domain": "regulatory"
+    "query": "We discovered a personal data breach affecting 10,000 users in India and the EU. What are our notification obligations?",
+    "jurisdiction": "IN/EU",
+    "domain": "privacy"
   }'
 ```
 
 ### 3. Run Tests
 
 ```bash
-# Unit tests (no services needed)
+# Unit tests
 pytest tests/unit/ -v
 
-# Integration tests (mock-only, no AWS)
+# Integration tests
 pytest tests/integration/ -v
 
-# E2E tests (requires docker-compose up)
+# E2E tests (requires running environment)
 pytest tests/e2e/ -v --tb=short
 ```
 
@@ -107,7 +107,7 @@ terraform apply -var="environment=production"
 ### AWS Requirements
 
 - Aurora PostgreSQL 15+ with pgvector extension
-- Amazon Bedrock access to Claude 3.5 Sonnet + Titan Embeddings
+- Amazon Bedrock or configured LLM provider
 - ECR repository push permission
 - ECS/Fargate capacity
 
@@ -116,11 +116,11 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for the complete infrastructure diagram
 ## Project Structure
 
 ```
-cloagent/
+dpo-agent/
 ├── src/
 │   ├── main.py              # FastAPI app + MCP endpoints
 │   ├── config.py            # Pydantic settings
-│   ├── agent/               # CLO Agent
+│   ├── agent/               # DPO / CLO Agent
 │   │   ├── clo_agent.py     # Main orchestrator
 │   │   ├── legal_reasoning.py
 │   │   ├── prioritization.py
@@ -131,6 +131,7 @@ cloagent/
 │   ├── llm/                 # LLM abstraction
 │   │   ├── base.py
 │   │   ├── bedrock.py
+│   │   ├── codemax.py
 │   │   └── mock.py
 │   ├── embedding/           # Embedding abstraction
 │   │   ├── base.py
@@ -156,11 +157,8 @@ cloagent/
 │   ├── ecs.tf
 │   ├── networking.tf
 │   ├── s3.tf
-│   └���─ iam.tf
-└── sample_docs/             # Government legal documents
-    ├── regulatory/
-    ├── employment/
-    └── contracts/
+│   └── iam.tf
+└── docs/                    # Government & Privacy Legal Documents
 ```
 
 ## Security
@@ -172,8 +170,8 @@ cloagent/
 - **Audit logging**: Every decision logged with SHA-256 hashes of input and LLM prompt
 - **Prompt injection protection**: Retrieved documents sanitized before LLM calls
 
-## Future Phases
+## Future Roadmap
 
-- Phase 2: Slack/Email ingestion, court feeds, customer vector DBs
-- Phase 3: Autonomous action execution with approval workflows
-- Phase 4: Multi-jurisdiction compliance dashboards
+- Phase 2: Automated DPIA (Data Protection Impact Assessment) workflow engine
+- Phase 3: Real-time CERT-In Incident Response automation
+- Phase 4: Multi-jurisdiction data privacy compliance dashboard
