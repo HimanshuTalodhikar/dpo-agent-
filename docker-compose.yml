@@ -1,0 +1,73 @@
+# ── CLO MCP Local Development Stack ──────────────────────────────────────────
+# pgvector (Aurora emulator) + mock-llm + app
+# Production: AWS ECS/Fargate + Aurora Serverless v2
+
+services:
+  mock-llm:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: cloagent-mock-llm
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgvector:
+    build:
+      context: .
+      dockerfile: Dockerfile.pgvector
+    container_name: cloagent-pgvector
+    environment:
+      POSTGRES_DB: cloagent
+      POSTGRES_USER: cloagent
+      POSTGRES_PASSWORD: cloagent_secret
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./sample_docs:/sample_docs:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cloagent -d cloagent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: local
+    container_name: cloagent-app
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: local
+      LOG_LEVEL: INFO
+      USE_MOCK_LLM: "true"
+      MOCK_LLM_URL: "http://mock-llm:8080/v1/chat/completions"
+      DATABASE_URL: "postgresql+asyncpg://cloagent:cloagent_secret@pgvector:5432/cloagent"
+      AWS_REGION: "us-east-1"
+      S3_BUCKET: "cloagent-documents"
+      EMBEDDING_DIMENSIONS: "1024"
+    volumes:
+      - ./src:/app/src:ro
+      - ./sample_docs:/sample_docs:ro
+    depends_on:
+      pgvector:
+        condition: service_healthy
+      mock-llm:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    command: ["python", "entrypoint.py"]
+
+volumes:
+  pgvector_data:

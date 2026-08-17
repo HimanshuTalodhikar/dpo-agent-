@@ -1,0 +1,75 @@
+# ── Terraform Variables ──── Copy to terraform.tfvars and fill in values ──────────
+#
+# cp infra/terraform.tfvars.example infra/terraform.tfvars
+# vim infra/terraform.tfvars
+# terraform plan -var-file=terraform.tfvars
+
+# ── Core ──────────────────────────────────────────────────────────────────────
+
+aws_region = "us-east-1"
+environment = "production"
+
+# AWS profile from ~/.aws/config (leave empty to use default/environment credentials)
+aws_profile = ""
+
+# Reuse an existing VPC instead of creating a new one (optional)
+# Leave empty to create a dedicated VPC for CLO Agent
+# existing_vpc_id = "vpc-0123456789abcdef0"
+existing_vpc_id = ""
+
+# ── Database ──────────────────────────────────────────────────────────────────
+
+db_name     = "cloagent"
+db_username = "cloagent"
+
+# Password managed by Terraform random_password — do NOT set a fixed value here
+# (it gets rotated in Secrets Manager automatically)
+
+# Aurora Serverless v2 capacity
+aurora_serverless_v2_min_capacity = 0.5
+aurora_serverless_v2_max_capacity = 16
+
+# ── Compute ───────────────────────────────────────────────────────────────────
+
+desired_count = 2
+memory        = 2048   # MB per ECS task
+cpu           = 1024   # CPU units per ECS task (1024 = 1 vCPU)
+
+# ── Networking ────────────────────────────────────────────────────────────────
+
+container_port = 8000
+
+# ── Bedrock ───────────────────────────────────────────────────────────────────
+
+bedrock_model_id      = "anthropic.claude-3-5-sonnet-20241022-v1"
+embedding_model_id   = "amazon.titan-embed-text-v2"
+embedding_dimensions = 1024
+
+# ── S3 ───────────────────────────────────────────────────────────────────────
+
+# Must be globally unique — append your org prefix if needed
+s3_bucket_name = "cloagent-documents"
+
+# ── TLS / HTTPS ─────────────────���──────────────────────────────────────────────
+
+# Domain name for HTTPS certificate + Route53 alias.
+# Leave empty to skip TLS (not recommended for production).
+# Must have a Route53 hosted zone in this account for DNS validation.
+domain_name = "cloagent.example.com"
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+
+log_retention_days = 30
+
+# ── Protection ────────────────────────────────────────────────────────────────
+
+# Set to true for production (enables deletion protection on ALB + RDS final snapshot)
+enable_patrol_deletion_protection = true
+
+# ── Tags ──────────────────────────────────────────────────────────────────────
+
+tags = {
+  Owner       = "cloagent-team"
+  CostCenter  = "LegalTech"
+  Environment = "production"
+}

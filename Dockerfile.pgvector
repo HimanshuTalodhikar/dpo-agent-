@@ -1,0 +1,25 @@
+# pgvector on postgres:16 — ARM64 compatible
+# Downloads the pre-built pgvector package from GitHub releases
+# to avoid git clone SSL issues.
+FROM postgres:16
+
+# pgvector v0.7.0 release assets
+# Supports: amd64 (x86_64), arm64
+ARG TARGETARCH
+ENV PGVECTOR_VERSION=0.7.0
+
+RUN case "$TARGETARCH" in \
+    amd64)  ARCH="x86_64"  ;; \
+    arm64)  ARCH="aarch64" ;; \
+    *)      ARCH="x86_64"  ;; \
+    esac \
+    && curl -fsSL "https://github.com/pgvector/pgvector/releases/download/v${PGVECTOR_VERSION}/pgvector-${PGVECTOR_VERSION}.${ARCH}.deb" \
+       -o /tmp/pgvector.deb \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends /tmp/pgvector.deb \
+    && rm /tmp/pgvector.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create extension on startup
+RUN echo "CREATE EXTENSION IF NOT EXISTS vector;" > /docker-entrypoint-initdb.d/10-pgvector.sql

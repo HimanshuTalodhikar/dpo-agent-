@@ -1,0 +1,60 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# IDE / Tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+.claude/
+.gemini/
+
+# Environment and Secret files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.cert
+*.secret
+id_rsa*
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfstate.d/
+*.tfvars
+*.tfvars.json
+!infra/*.tfvars.example
+
+# Logs
+*.log
+logs/
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local development
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db

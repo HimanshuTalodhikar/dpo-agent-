@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPDP AI Agent — Executive Legal AI & Data Privacy Automation Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="bg-gradient-glow"></div>
+    <div class="bg-grid-pattern"></div>
+
+    <!-- FULL INTRODUCTION & LANDING PAGE (ENTRANCE VIEW) -->
+    <div id="landing-view" class="landing-container">
+        <!-- Header Nav -->
+        <header class="landing-header">
+            <div class="brand-section">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">DPDP <span class="accent-text">AI Agent</span></span>
+                    <span class="brand-subtitle">Executive Legal Intelligence Platform</span>
+                </div>
+            </div>
+            <div class="landing-nav-actions">
+                <a href="#features-section" class="nav-link">Platform Capabilities</a>
+                <a href="#statutes-section" class="nav-link">Statutory Frameworks</a>
+                <button class="btn-secondary-sm" onclick="quickDemoLogin()">
+                    <i class="fa-solid fa-bolt"></i> Quick Demo Access
+                </button>
+                <button class="btn-primary-sm" onclick="scrollToLogin()">
+                    <i class="fa-solid fa-right-to-bracket"></i> Sign In
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">
+                <i class="fa-solid fa-sparkles"></i> Engineered Specifically for India's DPDP Act 2023 & DPDP Rules 2025
+            </div>
+            <h1 class="hero-title">The Autonomous <span class="accent-text">Data Privacy & Legal Intelligence</span> Agent for Indian Enterprise</h1>
+            <p class="hero-description">
+                Empower your Chief Legal Officers, Data Protection Officers (DPOs), and Compliance Lead Teams with grounded statutory risk analysis, automated 30-day remediation roadmaps, and native Claude Desktop MCP integration.
+            </p>
+            <div class="hero-cta-group">
+                <button class="btn-primary btn-large" onclick="quickDemoLogin()">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Launch Quick Demo Workspace</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <a href="#claude-mcp-intro" class="btn-ghost btn-large">
+                    <i class="fa-solid fa-plug"></i> Learn About Claude MCP Integration
+                </a>
+            </div>
+        </section>
+
+        <!-- Platform Core Capabilities Grid -->
+        <section id="features-section" class="landing-section">
+            <div class="section-header-center">
+                <h2 class="section-title">Core Platform Capabilities</h2>
+                <p class="section-subtitle">Comprehensive legal risk assessment, statutory RAG, and execution roadmaps.</p>
+            </div>
+
+            <div class="feature-cards-grid">
+                <div class="glass-card feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-gavel"></i></div>
+                    <h3>Grounded Legal Risk Analysis</h3>
+                    <p>Evaluates corporate data practices against the <strong>Digital Personal Data Protection Act 2023</strong>, <strong>DPDP Rules 2025</strong>, and <strong>CERT-In Section 70B</strong> directions. Returns exposure badges (`CRITICAL`, `HIGH`), statutory legal rationales, and priority ranks.</p>
+                </div>
+
+                <div class="glass-card feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-calendar-check"></i></div>
+                    <h3>30-Day Remediation Planner</h3>
+                    <p>Instantly converts identified data protection breaches or privacy compliance gaps into a cost-estimated ($ USD / ₹ INR), prioritized 30-day execution roadmap for DPOs and executive leadership.</p>
+                </div>
+
+                <div class="glass-card feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-brain"></i></div>
+                    <h3>Zep Graphiti RAG Memory</h3>
+                    <p>Knowledge graph memory indexing India's official Gazette notifications, DPDP Act sections, CERT-In cybersecurity directives, and landmark privacy precedents (<em>Puttaswamy v. Union of India</em>).</p>
+                </div>
+
+                <div class="glass-card feature-card" id="claude-mcp-intro">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-plug-circle-bolt"></i></div>
+                    <h3>Claude Desktop Native MCP</h3>
+                    <p>Integrate seamlessly with <strong>Claude Desktop</strong> using the Model Context Protocol (MCP). Execute real-time legal risk analysis and statutory searches directly inside your AI chat workflow.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Covered Statutory Frameworks -->
+        <section id="statutes-section" class="landing-section">
+            <div class="section-header-center">
+                <h2 class="section-title">Statutory Legal Frameworks Indexed</h2>
+                <p class="section-subtitle">Real-time compliance intelligence for Indian regulations and guidelines.</p>
+            </div>
+
+            <div class="statutes-grid">
+                <div class="statute-box">
+                    <div class="statute-icon"><i class="fa-solid fa-scale-unbalanced-flip"></i></div>
+                    <div class="statute-info">
+                        <h4>DPDP Act 2023 (Digital Personal Data Protection)</h4>
+                        <p>Section 6 Consent Mandates, Section 8 Data Fiduciary Duties, Section 16 Cross-Border Transfer & ₹250 Crore Penalty Schedule.</p>
+                    </div>
+                </div>
+
+                <div class="statute-box">
+                    <div class="statute-icon"><i class="fa-solid fa-file-contract"></i></div>
+                    <div class="statute-info">
+                        <h4>DPDP Rules 2025 (Rule 7 Breach Intimation)</h4>
+                        <p>Mandatory 2-stage breach notification: Preliminary alert "without delay" & 72-Hour Data Protection Board filing.</p>
+                    </div>
+                </div>
+
+                <div class="statute-box">
+                    <div class="statute-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                    <div class="statute-info">
+                        <h4>CERT-In Directions (IT Act Section 70B)</h4>
+                        <p>Mandatory 6-Hour cybersecurity incident reporting window for Indian tech companies and cloud operators.</p>
+                    </div>
+                </div>
+
+                <div class="statute-box">
+                    <div class="statute-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    <div class="statute-info">
+                        <h4>RBI & SEBI Data Governance Guidelines</h4>
+                        <p>Payment data localization rules, IT outsourcing risk frameworks, and mandatory security audit directives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login / Access Section -->
+        <section id="login-section" class="landing-section login-scroll-target">
+            <div class="glass-card login-card max-width-card">
+                <div class="card-header text-center">
+                    <div class="login-avatar"><i class="fa-solid fa-user-shield"></i></div>
+                    <h2 class="card-title justify-center">Enter DPDP Agent Enterprise Workspace</h2>
+                    <p class="card-subtitle">Access your interactive compliance command center instantly.</p>
+                </div>
+
+                <div class="quick-demo-banner">
+                    <button type="button" class="btn-primary btn-large width-100" onclick="quickDemoLogin()">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Instant Quick Demo Access</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <div class="divider-line"><span>OR SIGN IN WITH WORKSPACE CREDENTIALS</span></div>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Work Email Address:</label>
+                        <input type="email" id="login-email" class="custom-input" value="dpo@enterprise-india.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-company">Company / Organization:</label>
+                        <input type="text" id="login-company" class="custom-input" value="Fintech Solutions Ltd (India)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-pass">Password / Access Key:</label>
+                        <input type="password" id="login-pass" class="custom-input" value="••••••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn-secondary-lg width-100 justify-center">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Sign In with Credentials</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="landing-footer">
+            <p>© 2026 DPDP AI Agent Platform — Enterprise Legal Intelligence for India. Grounded in MeitY & Gazette Regulations.</p>
+        </footer>
+    </div>
+
+    <!-- MAIN DASHBOARD VIEW (Hidden when not logged in) -->
+    <div id="dashboard-view" class="app-container hidden">
+        <!-- Top Navigation Header -->
+        <header class="top-header glass-card">
+            <div class="brand-section">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">DPDP <span class="accent-text">AI Agent</span></span>
+                    <span class="brand-subtitle" id="user-company-text">Executive Compliance Command Center</span>
+                </div>
+            </div>
+
+            <!-- Health Status Bar -->
+            <div class="status-bar">
+                <div class="status-pill" id="agent-status-pill">
+                    <span class="status-dot pulsing"></span>
+                    <span class="status-label" id="agent-status-text">Pinging Server...</span>
+                </div>
+                <div class="infra-badge">
+                    <i class="fa-brands fa-aws"></i>
+                    <span>AWS ECS Fargate</span>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()" title="Sign Out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Navigation Tabs -->
+        <nav class="nav-tabs glass-card">
+            <button class="nav-tab active" data-tab="risk-analyzer">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Legal Risk Assessment</span>
+            </button>
+            <button class="nav-tab" data-tab="remediation-planner">
+                <i class="fa-solid fa-list-check"></i>
+                <span>30-Day Remediation Plan</span>
+            </button>
+            <button class="nav-tab" data-tab="knowledge-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Statutory Knowledge Base</span>
+            </button>
+            <button class="nav-tab" data-tab="document-ingest">
+                <i class="fa-solid fa-file-arrow-up"></i>
+                <span>Ingest Legal Documents</span>
+            </button>
+            <button class="nav-tab nav-tab-highlight" data-tab="claude-guide">
+                <i class="fa-solid fa-plug"></i>
+                <span>Connect to Claude Desktop</span>
+            </button>
+            <button class="nav-tab nav-tab-chat" data-tab="dpdp-chat">
+                <i class="fa-solid fa-comments"></i>
+                <span>DPDP AI Chat Assistant</span>
+            </button>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content-area">
+
+            <!-- TAB 1: Risk Assessment -->
+            <section id="tab-risk-analyzer" class="tab-pane active">
+                <div class="pane-grid">
+                    <div class="glass-card card-padding">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fa-solid fa-gavel accent-icon"></i> Evaluate Legal & Compliance Risk</h2>
+                            <p class="card-subtitle">Assess regulatory exposure under India's DPDP Act 2023, DPDP Rules 2025, CERT-In directions, and IT Act 2000.</p>
+                        </div>
+
+                        <div class="quick-scenarios">
+                            <span class="scenario-label">Quick Scenarios:</span>
+                            <div class="pill-group">
+                                <button class="scenario-pill" onclick="loadScenario('monitoring')">
+                                    <i class="fa-solid fa-desktop"></i> Keystroke Monitoring
+                                </button>
+                                <button class="scenario-pill" onclick="loadScenario('breach')">
+                                    <i class="fa-solid fa-bolt"></i> 72-Hr Breach Notice
+                                </button>
+                                <button class="scenario-pill" onclick="loadScenario('localization')">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> RBI Data Localization
+                                </button>
+                                <button class="scenario-pill" onclick="loadScenario('consent')">
+                                    <i class="fa-solid fa-user-shield"></i> Consent Manager Audit
+                                </button>
+                            </div>
+                        </div>
+
+                        <form id="risk-form" onsubmit="handleRiskAnalyze(event)">
+                            <div class="form-group">
+                                <label for="query-input">Describe Corporate Compliance Situation or Practice:</label>
+                                <textarea id="query-input" rows="5" class="custom-textarea" placeholder="e.g. Our fintech startup in Bengaluru wants to implement continuous keystroke logging and screen recording for remote engineers to prevent data leakage of customer PII..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary" id="analyze-btn">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Run Grounded Risk Assessment</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="glass-card card-padding" id="risk-results-card">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fa-solid fa-chart-pie accent-icon"></i> Statutory Risk Assessment Output</h2>
+                            <p class="card-subtitle">Real-time analysis powered by Codemax AI & Zep Agent Memory.</p>
+                        </div>
+
+                        <div id="risk-empty-state" class="empty-state">
+                            <div class="empty-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <h3>No Analysis Generated Yet</h3>
+                            <p>Select a quick scenario or type your compliance query to generate a grounded legal risk assessment under Indian law.</p>
+                        </div>
+
+                        <div id="risk-loading-state" class="loading-state hidden">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Retrieving Indian statutory provisions & evaluating regulatory exposure...</p>
+                        </div>
+
+                        <div id="risk-output-content" class="output-content hidden">
+                            <div class="meta-row">
+                                <div class="exposure-badge" id="res-exposure-badge">CRITICAL</div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Priority Rank:</span>
+                                    <span class="meta-val" id="res-priority-rank">1 / 10</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Confidence:</span>
+                                    <span class="meta-val" id="res-confidence">92%</span>
+                                </div>
+                            </div>
+
+                            <div class="output-section">
+                                <h4 class="section-heading"><i class="fa-solid fa-book-bookmark"></i> Statutory Legal Rationale</h4>
+                                <div id="res-rationale"></div>
+                            </div>
+
+                            <div class="output-section">
+                                <h4 class="section-heading"><i class="fa-solid fa-list-check"></i> Actionable Compliance Roadmap</h4>
+                                <div class="action-cards-grid" id="res-action-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Remediation Planner -->
+            <section id="tab-remediation-planner" class="tab-pane">
+                <div class="pane-grid">
+                    <div class="glass-card card-padding">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fa-solid fa-screwdriver-wrench accent-icon"></i> 30-Day Remediation Generator</h2>
+                            <p class="card-subtitle">Generate a cost-estimated, prioritized compliance roadmap for any identified data risk.</p>
+                        </div>
+
+                        <form id="remediation-form" onsubmit="handleGenerateRemediation(event)">
+                            <div class="form-group">
+                                <label for="rem-desc">Risk Title / Description:</label>
+                                <input type="text" id="rem-desc" class="custom-input" value="Unauthorized access to customer PII (PAN, Aadhaar, payment history) at an Indian fintech startup">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="rem-exposure">Exposure Level:</label>
+                                    <select id="rem-exposure" class="custom-select">
+                                        <option value="CRITICAL">CRITICAL</option>
+                                        <option value="HIGH" selected>HIGH</option>
+                                        <option value="MEDIUM">MEDIUM</option>
+                                        <option value="LOW">LOW</option>
+                                    </select>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="rem-cost">Est. Financial Exposure ($ USD):</label>
+                                    <input type="number" id="rem-cost" class="custom-input" value="30000000">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rem-basis">Legal Basis:</label>
+                                <input type="text" id="rem-basis" class="custom-input" value="DPDP Act 2023 Section 8(6), Rule 7 DPDP Rules 2025, CERT-In Section 70B">
+                            </div>
+                            <button type="submit" class="btn-primary" id="remediate-btn">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                <span>Generate 30-Day Remediation Plan</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="glass-card card-padding" id="rem-results-card">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fa-solid fa-timeline accent-icon"></i> Statutory Action Plan</h2>
+                            <p class="card-subtitle" id="rem-summary-subtitle">Generate a plan to view cost breakdowns and timelines.</p>
+                        </div>
+
+                        <div id="rem-empty-state" class="empty-state">
+                            <div class="empty-icon"><i class="fa-solid fa-route"></i></div>
+                            <h3>No Remediation Plan Active</h3>
+                            <p>Fill out the risk parameters and click "Generate 30-Day Remediation Plan" to render step-by-step action items.</p>
+                        </div>
+
+                        <div id="rem-loading-state" class="loading-state hidden">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Generating cost estimates & statutory action timeline...</p>
+                        </div>
+
+                        <div id="rem-output-content" class="output-content hidden">
+                            <div class="rem-summary-bar">
+                                <div class="stat-box">
+                                    <span class="stat-num" id="stat-total-cost">$124,500</span>
+                                    <span class="stat-lbl">Estimated Total Cost (USD)</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-num" id="stat-days">30 Days</span>
+                                    <span class="stat-lbl">Execution Duration</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-num" id="stat-steps">8 Steps</span>
+                                    <span class="stat-lbl">Total Action Items</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-container" id="timeline-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: Knowledge Search -->
+            <section id="tab-knowledge-search" class="tab-pane">
+                <div class="glass-card card-padding">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fa-solid fa-database accent-icon"></i> Statutory Knowledge Graph Search</h2>
+                        <p class="card-subtitle">Query indexed DPDP Act 2023 sections, DPDP Rules 2025, CERT-In directions, and IT Act rules in Zep Cloud Agent Memory.</p>
+                    </div>
+
+                    <form id="search-form" onsubmit="handleSearchKnowledge(event)" class="search-form-row">
+                        <input type="text" id="search-query" class="custom-input flex-grow" placeholder="e.g. employee monitoring DPDP Act consent requirements..." value="employee monitoring DPDP Act consent">
+                        <button type="submit" class="btn-primary">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Search Knowledge Base</span>
+                        </button>
+                    </form>
+
+                    <div id="search-results-list" class="search-results-container"></div>
+                </div>
+            </section>
+
+            <!-- TAB 4: Document Ingestion -->
+            <section id="tab-document-ingest" class="tab-pane">
+                <div class="glass-card card-padding max-width-card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fa-solid fa-file-circle-plus accent-icon"></i> Ingest New Statutory Act or Rule</h2>
+                        <p class="card-subtitle">Add official Gazette notifications, DPDP Rules, or sector guidelines directly into Zep Agent Memory.</p>
+                    </div>
+
+                    <form id="ingest-form" onsubmit="handleIngestDocument(event)">
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="ing-doc-id">Document ID / Code:</label>
+                                <input type="text" id="ing-doc-id" class="custom-input" placeholder="e.g. in-dpdp-rules-2025-rule7" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="ing-type">Document Type:</label>
+                                <select id="ing-type" class="custom-select">
+                                    <option value="ACT">ACT (Statute)</option>
+                                    <option value="RULE" selected>RULE (Delegated Legislation)</option>
+                                    <option value="REGULATION">REGULATION</option>
+                                    <option value="GUIDELINE">GUIDELINE / DIRECTION</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ing-title">Document Title:</label>
+                            <input type="text" id="ing-title" class="custom-input" placeholder="e.g. DPDP Rules 2025 - Rule 7 Personal Data Breach Intimation" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ing-content">Full Statutory Text / Gazette Excerpt:</label>
+                            <textarea id="ing-content" rows="6" class="custom-textarea" placeholder="Paste full statutory text or gazette notification excerpt here..." required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="ing-authority">Issuing Authority:</label>
+                                <input type="text" id="ing-authority" class="custom-input" value="Ministry of Electronics and Information Technology (MeitY)">
+                            </div>
+                            <div class="form-group half">
+                                <label for="ing-jurisdiction">Jurisdiction:</label>
+                                <input type="text" id="ing-jurisdiction" class="custom-input" value="central">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="ingest-btn">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Ingest into Zep Agent Memory</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- TAB 5: Connect to Claude Desktop (MCP Integration Guide with OS Command Boxes) -->
+            <section id="tab-claude-guide" class="tab-pane">
+                <div class="glass-card card-padding max-width-card">
+                    <div class="card-header">
+                        <div class="guide-header-badge"><i class="fa-solid fa-plug-circle-bolt"></i> Official Integration Guide</div>
+                        <h2 class="card-title"><i class="fa-solid fa-robot accent-icon"></i> Connect DPDP Agent to Claude Desktop</h2>
+                        <p class="card-subtitle">Enable real-time legal automation directly inside your Claude Desktop conversation interface via the Model Context Protocol (MCP).</p>
+                    </div>
+
+                    <!-- OS Selector Subtabs -->
+                    <div class="os-tabs-bar">
+                        <span class="os-tab-label">Select Operating System:</span>
+                        <button class="os-tab-btn active" onclick="switchOsTab('mac')"><i class="fa-brands fa-apple"></i> macOS</button>
+                        <button class="os-tab-btn" onclick="switchOsTab('win')"><i class="fa-brands fa-windows"></i> Windows</button>
+                        <button class="os-tab-btn" onclick="switchOsTab('linux')"><i class="fa-brands fa-linux"></i> Linux</button>
+                    </div>
+
+                    <div class="guide-steps-container">
+                        
+                        <!-- Step 1: Automated Terminal Command Setup -->
+                        <div class="guide-step-card">
+                            <div class="step-badge-num">1</div>
+                            <div class="step-body">
+                                <h3>Run Automated Setup Command</h3>
+                                <p>Open your terminal or PowerShell and run the one-line setup command for your OS:</p>
+
+                                <!-- macOS Commands Box -->
+                                <div id="os-cmd-mac" class="os-cmd-pane active">
+                                    <div class="code-snippet-wrapper">
+                                        <button class="btn-copy-code" onclick="copyOsCommand('mac-cmd-code')">
+                                            <i class="fa-regular fa-copy"></i> <span>Copy macOS Terminal Command</span>
+                                        </button>
+                                        <pre class="code-block" id="mac-cmd-code">
+# macOS Terminal Setup Command:
+mkdir -p "$HOME/Library/Application Support/Claude" && \
+cp "/Users/himanshu/desktop/cloagent/scripts/mcp_bridge.py" "$HOME/Library/Application Support/Claude/mcp_bridge.py" && \
+cat << 'EOF' > "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
+{
+  "mcpServers": {
+    "dpdp-agent": {
+      "command": "/usr/bin/python3",
+      "args": [
+        "/Users/himanshu/Library/Application Support/Claude/mcp_bridge.py"
+      ]
+    }
+  }
+}
+EOF</pre>
+                                    </div>
+                                </div>
+
+                                <!-- Windows Commands Box -->
+                                <div id="os-cmd-win" class="os-cmd-pane hidden">
+                                    <div class="code-snippet-wrapper">
+                                        <button class="btn-copy-code" onclick="copyOsCommand('win-cmd-code')">
+                                            <i class="fa-regular fa-copy"></i> <span>Copy Windows PowerShell Command</span>
+                                        </button>
+                                        <pre class="code-block" id="win-cmd-code">
+# Windows PowerShell Setup Command:
+New-Item -ItemType Directory -Force -Path "$env:APPDATA\Claude"
+Set-Content -Path "$env:APPDATA\Claude\mcp_bridge.py" -Value (Invoke-WebRequest -Uri "http://cloagent-alb-896741255.ap-south-1.elb.amazonaws.com/mcp_bridge.py").Content
+Set-Content -Path "$env:APPDATA\Claude\claude_desktop_config.json" -Value @'
+{
+  "mcpServers": {
+    "dpdp-agent": {
+      "command": "python",
+      "args": [
+        "%APPDATA%\\Claude\\mcp_bridge.py"
+      ]
+    }
+  }
+}
+'@</pre>
+                                    </div>
+                                </div>
+
+                                <!-- Linux Commands Box -->
+                                <div id="os-cmd-linux" class="os-cmd-pane hidden">
+                                    <div class="code-snippet-wrapper">
+                                        <button class="btn-copy-code" onclick="copyOsCommand('linux-cmd-code')">
+                                            <i class="fa-regular fa-copy"></i> <span>Copy Linux Bash Command</span>
+                                        </button>
+                                        <pre class="code-block" id="linux-cmd-code">
+# Linux Bash Setup Command:
+mkdir -p "$HOME/.config/Claude" && \
+cat << 'EOF' > "$HOME/.config/Claude/claude_desktop_config.json"
+{
+  "mcpServers": {
+    "dpdp-agent": {
+      "command": "python3",
+      "args": [
+        "/path/to/mcp_bridge.py"
+      ]
+    }
+  }
+}
+EOF</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Restart & Verify -->
+                        <div class="guide-step-card">
+                            <div class="step-badge-num">2</div>
+                            <div class="step-body">
+                                <h3>Restart Claude Desktop</h3>
+                                <p>Completely quit and re-open Claude Desktop. You will see the <i class="fa-solid fa-hammer accent-icon"></i> hammer tool icon ready with 5 DPDP capabilities!</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Test Prompt -->
+                        <div class="guide-step-card">
+                            <div class="step-badge-num">3</div>
+                            <div class="step-body">
+                                <h3>Start Asking Real-Time Legal Queries</h3>
+                                <div class="prompt-test-box">
+                                    <div class="prompt-box-header"><i class="fa-solid fa-comment-dots"></i> Try asking Claude:</div>
+                                    <p class="sample-prompt-text">
+                                        <em>"Our Indian fintech startup wants to implement continuous keystroke logging and screen recording for remote engineers. Analyze our legal risks under Section 6 of the DPDP Act 2023, IT Act 2000, and CERT-In compliance requirements."</em>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: DPDP Chat Assistant & Complaints -->
+            <section id="tab-dpdp-chat" class="tab-pane">
+                <div class="glass-card chat-card-container">
+                    <div class="card-header border-bottom flex-between">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-comments accent-text"></i>
+                                DPDP AI Assistant & Complaints Hotline
+                            </h2>
+                            <p class="card-subtitle">Interactive statutory Q&A, Data Protection Board (DPB) complaint guidance, and Data Principal rights advice.</p>
+                        </div>
+                        <div class="chat-status-badge">
+                            <i class="fa-solid fa-brain"></i> Graphiti RAG Memory Active
+                        </div>
+                    </div>
+
+                    <!-- Quick Sample Questions -->
+                    <div class="chat-quick-questions">
+                        <span class="quick-title">Quick Topics:</span>
+                        <button type="button" class="quick-chip" onclick="sendQuickChatMessage('How do I file a data privacy complaint against a company with the Data Protection Board of India?')">
+                            <i class="fa-solid fa-scale-balanced"></i> File DPB Complaint
+                        </button>
+                        <button type="button" class="quick-chip" onclick="sendQuickChatMessage('What is the statutory deadline and procedure for 72-hour breach intimation under DPDP Rule 7?')">
+                            <i class="fa-solid fa-clock-rotate-left"></i> 72-Hr Breach Intimation
+                        </button>
+                        <button type="button" class="quick-chip" onclick="sendQuickChatMessage('What rights do Data Principals have under Section 11 to Section 14 of the DPDP Act 2023?')">
+                            <i class="fa-solid fa-user-shield"></i> Data Principal Rights
+                        </button>
+                        <button type="button" class="quick-chip" onclick="sendQuickChatMessage('What are the penalties for failure to implement reasonable security safeguards under Section 37?')">
+                            <i class="fa-solid fa-indian-rupee-sign"></i> Statutory Penalties
+                        </button>
+                    </div>
+
+                    <!-- Chat Message Area -->
+                    <div class="chat-messages-scroll" id="chat-messages-container">
+                        <div class="chat-message bot-message">
+                            <div class="chat-avatar"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="chat-bubble">
+                                <strong>DPDP AI Assistant:</strong><br>
+                                Welcome to the DPDP AI Compliance & Complaints Assistant! I am grounded in the <strong>Digital Personal Data Protection Act 2023</strong>, <strong>DPDP Rules 2025</strong>, and <strong>CERT-In Directions</strong>.<br><br>
+                                How can I assist you with data privacy queries, Data Protection Board (DPB) grievance procedures, or organizational compliance today?
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Box -->
+                    <form id="chat-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+                        <input type="text" id="chat-input" class="custom-input chat-input-field" placeholder="Ask any DPDP statutory question or complaint scenario..." required autocomplete="off">
+                        <button type="submit" class="btn-primary btn-send-chat" id="chat-submit-btn">
+                            <span>Send</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <i class="toast-icon fa-solid fa-circle-check"></i>
+        <span class="toast-message" id="toast-msg">Operation completed successfully</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
