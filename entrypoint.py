@@ -112,7 +112,7 @@ async def main() -> None:
         [sys.executable, "-m", "uvicorn", "src.main:app",
          "--host", "0.0.0.0", "--port", "8000",
          "--proxy-headers", "--forwarded-allow-ips", "*",
-         "--timeout-keep-alive", "75"],
+         "--timeout-keep-alive", "315"],
         stdout=sys.stdout, stderr=sys.stderr,
     )
     proc.wait()

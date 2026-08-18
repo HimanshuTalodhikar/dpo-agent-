@@ -297,7 +297,7 @@ resource "aws_lb" "cloagent" {
 
   enable_deletion_protection = var.enable_patrol_deletion_protection
 
-  idle_timeout = 60
+  idle_timeout = 300
 
   tags = merge(var.tags, { Name = "${local.app_name}-alb" })
 }

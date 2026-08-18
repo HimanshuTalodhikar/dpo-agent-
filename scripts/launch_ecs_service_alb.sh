@@ -116,6 +116,12 @@ else
     echo "  -> Application Load Balancer exists: ${ALB_ARN}"
 fi
 
+# Ensure ALB idle_timeout is 300 seconds (prevents HTTP 504 Gateway Timeout during LLM calls)
+aws elbv2 modify-load-balancer-attributes \
+    --load-balancer-arn "${ALB_ARN}" \
+    --attributes Key=idle_timeout.timeout_seconds,Value=300 \
+    --region "${AWS_REGION}" &>/dev/null || true
+
 # Get ALB DNS Name
 ALB_DNS=$(aws elbv2 describe-load-balancers --load-balancer-arns "${ALB_ARN}" --region "${AWS_REGION}" --query "LoadBalancers[0].DNSName" --output text)
 
