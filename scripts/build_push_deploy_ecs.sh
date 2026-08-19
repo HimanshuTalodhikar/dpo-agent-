@@ -19,7 +19,7 @@ aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AW
 echo "======================================================================"
 echo " 2. Building Docker Image for linux/amd64..."
 echo "======================================================================"
-docker build --platform linux/amd64 -t "${ECR_URI}:latest" .
+docker build --no-cache --platform linux/amd64 -t "${ECR_URI}:latest" .
 
 echo "======================================================================"
 echo " 3. Pushing Docker Image to AWS ECR..."

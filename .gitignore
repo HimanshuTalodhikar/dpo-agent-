@@ -8,6 +8,8 @@ dist/
 build/
 *.egg-info/
 .eggs/
+node_modules/
+frontend/node_modules/
 
 # Virtual environments
 venv/
@@ -58,3 +60,4 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+.gstack/

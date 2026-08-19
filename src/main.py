@@ -615,6 +615,12 @@ frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "fronte
 if not os.path.exists(frontend_path):
     frontend_path = "frontend"
 
-if os.path.exists(frontend_path):
-    app.mount("/", NoCacheStaticFiles(directory=frontend_path, html=True), name="frontend")
+dist_path = os.path.join(frontend_path, "dist")
+if os.path.exists(dist_path):
+    target_path = dist_path
+else:
+    target_path = frontend_path
+
+if os.path.exists(target_path):
+    app.mount("/", NoCacheStaticFiles(directory=target_path, html=True), name="frontend")
 
