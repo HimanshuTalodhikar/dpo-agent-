@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { TabType } from '../types';
 import {
+  Home,
   Gavel,
   CalendarCheck,
   Scale,
@@ -17,6 +18,7 @@ interface TabNavProps {
 }
 
 const TABS: { id: TabType; label: string; icon: React.FC<{ className?: string }> }[] = [
+  { id: 'landing', label: 'Home / Overview', icon: Home },
   { id: 'risk', label: 'Risk Analyzer', icon: Gavel },
   { id: 'remediation', label: 'Remediation Plan', icon: CalendarCheck },
   { id: 'audit', label: 'Legal Audit Suite', icon: Scale },

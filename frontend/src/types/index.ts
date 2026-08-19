@@ -1,4 +1,5 @@
 export type TabType = 
+  | 'landing'
   | 'risk' 
   | 'remediation' 
   | 'audit' 

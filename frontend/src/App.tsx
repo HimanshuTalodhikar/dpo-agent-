@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TabType } from './types';
 import { BackgroundSpaceCanvas } from './components/BackgroundSpaceCanvas';
 import { HeaderNav } from './components/HeaderNav';
-import { RobotMascot } from './components/RobotMascot';
+import { LandingHero } from './components/LandingHero';
 import { TabNav } from './components/TabNav';
 import { RiskAnalyzerTab } from './tabs/RiskAnalyzerTab';
 import { RemediationPlannerTab } from './tabs/RemediationPlannerTab';
@@ -14,7 +14,7 @@ import { AssistantChatTab } from './tabs/AssistantChatTab';
 import { MCPConnectTab } from './tabs/MCPConnectTab';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('risk');
+  const [activeTab, setActiveTab] = useState<TabType>('landing');
   const [serverStatus, setServerStatus] = useState<'healthy' | 'checking' | 'error'>('checking');
 
   useEffect(() => {
@@ -35,16 +35,16 @@ export const App: React.FC = () => {
       {/* 60fps Interactive Golden Space Background */}
       <BackgroundSpaceCanvas />
 
-      {/* Header */}
-      <HeaderNav serverStatus={serverStatus} />
+      {/* Header with Home Navigation */}
+      <HeaderNav
+        serverStatus={serverStatus}
+        onNavigateHome={() => setActiveTab('landing')}
+      />
 
-      {/* Main Landing Mascot: Interactive DPDP Robot Assistant */}
-      <RobotMascot />
-
-      {/* Tab Navigation */}
+      {/* Tab Navigation Bar */}
       <TabNav activeTab={activeTab} onSelectTab={setActiveTab} />
 
-      {/* Active Tab View with Spring Transitions */}
+      {/* Active View: Main Executive Landing Page or Active Agent Tool Module */}
       <main className="relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
@@ -54,6 +54,9 @@ export const App: React.FC = () => {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
           >
+            {activeTab === 'landing' && (
+              <LandingHero onLaunchTool={(tab) => setActiveTab(tab)} />
+            )}
             {activeTab === 'risk' && <RiskAnalyzerTab />}
             {activeTab === 'remediation' && <RemediationPlannerTab />}
             {activeTab === 'audit' && <LegalAuditTab />}

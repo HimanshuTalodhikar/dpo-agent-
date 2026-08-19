@@ -1,21 +1,27 @@
 import React from 'react';
-import { ShieldCheck, Cpu, ExternalLink, Sparkles, Bot } from 'lucide-react';
+import { ShieldCheck, Cpu, ExternalLink, Sparkles } from 'lucide-react';
+import { TabType } from '../types';
 
 interface HeaderNavProps {
   serverStatus: 'healthy' | 'checking' | 'error';
+  onNavigateHome?: () => void;
 }
 
-export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus }) => {
+export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus, onNavigateHome }) => {
   return (
     <header className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:px-8 mb-6 glass-panel rounded-2xl border-amber-500/30">
-      {/* Brand & Identity */}
-      <div className="flex items-center gap-3">
-        <div className="w-11 h-11 rounded-xl bg-black border border-amber-400/50 flex items-center justify-center shadow-glow-gold">
-          <ShieldCheck className="w-6 h-6 text-amber-400" />
+      {/* Brand & Identity — Clickable to return Home */}
+      <div
+        onClick={onNavigateHome}
+        className="flex items-center gap-3 cursor-pointer group"
+        title="Return to Main Landing Overview"
+      >
+        <div className="w-11 h-11 rounded-xl bg-black border border-amber-400/50 flex items-center justify-center shadow-glow-gold group-hover:border-amber-300 transition-all">
+          <ShieldCheck className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white font-robot uppercase">
+            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white font-robot uppercase group-hover:text-amber-300 transition-colors">
               DPDP <span className="text-amber-400">AI AGENT</span>
             </h1>
             <span className="px-2 py-0.5 text-xs font-robot font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
