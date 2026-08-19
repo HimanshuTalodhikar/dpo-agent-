@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=4.0-ui-fix">
+    <link rel="stylesheet" href="styles.css?v=5.0-forced-inline-fix">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme">
@@ -252,30 +252,30 @@
                             <p class="card-subtitle">Assess regulatory exposure under India's DPDP Act 2023, DPDP Rules 2025, CERT-In directions, and IT Act 2000.</p>
                         </div>
 
-                        <div class="quick-scenarios">
-                            <span class="scenario-label">Quick Scenarios:</span>
-                            <div class="pill-group">
-                                <button class="scenario-pill" onclick="loadScenario('monitoring')">
+                        <div class="quick-scenarios" style="margin-bottom: 24px; width: 100%;">
+                            <span class="scenario-label" style="display: block; font-size: 13px; font-weight: 600; color: #a1a1aa; margin-bottom: 10px;">Quick Scenarios:</span>
+                            <div class="pill-group" style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
+                                <button type="button" class="scenario-pill" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); color: #ffffff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease;" onclick="loadScenario('monitoring')">
                                     <i class="fa-solid fa-desktop"></i> Keystroke Monitoring
                                 </button>
-                                <button class="scenario-pill" onclick="loadScenario('breach')">
+                                <button type="button" class="scenario-pill" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); color: #ffffff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease;" onclick="loadScenario('breach')">
                                     <i class="fa-solid fa-bolt"></i> 72-Hr Breach Notice
                                 </button>
-                                <button class="scenario-pill" onclick="loadScenario('localization')">
+                                <button type="button" class="scenario-pill" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); color: #ffffff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease;" onclick="loadScenario('localization')">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> RBI Data Localization
                                 </button>
-                                <button class="scenario-pill" onclick="loadScenario('consent')">
+                                <button type="button" class="scenario-pill" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); color: #ffffff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease;" onclick="loadScenario('consent')">
                                     <i class="fa-solid fa-user-shield"></i> Consent Manager Audit
                                 </button>
                             </div>
                         </div>
 
-                        <form id="risk-form" onsubmit="handleRiskAnalyze(event)">
-                            <div class="form-group">
-                                <label for="query-input">Describe Corporate Compliance Situation or Practice:</label>
-                                <textarea id="query-input" rows="5" class="custom-textarea" placeholder="e.g. Our fintech startup in Bengaluru wants to implement continuous keystroke logging and screen recording for remote engineers to prevent data leakage of customer PII..."></textarea>
+                        <form id="risk-form" onsubmit="handleRiskAnalyze(event)" style="display: flex; flex-direction: column; width: 100%;">
+                            <div class="form-group" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 20px;">
+                                <label for="query-input" style="display: block; width: 100%; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #ffffff;">Describe Corporate Compliance Situation or Practice:</label>
+                                <textarea id="query-input" rows="5" class="custom-textarea" style="display: block; width: 100%; box-sizing: border-box; min-height: 140px; padding: 14px 18px; background: #000000; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px; color: #ffffff; font-family: inherit; font-size: 14.5px; outline: none;" placeholder="e.g. Our fintech startup in Bengaluru wants to implement continuous keystroke logging and screen recording for remote engineers to prevent data leakage of customer PII..."></textarea>
                             </div>
-                            <button type="submit" class="btn-primary" id="analyze-btn">
+                            <button type="submit" class="btn-primary" id="analyze-btn" style="background: #ffffff; color: #000000; border: none; padding: 14px 28px; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                                 <span>Run Grounded Risk Assessment</span>
                             </button>
