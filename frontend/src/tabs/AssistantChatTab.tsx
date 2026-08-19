@@ -16,7 +16,7 @@ export const AssistantChatTab: React.FC = () => {
       id: '1',
       sender: 'assistant',
       content:
-        'Greetings! I am your executive DPDP Legal AI Assistant powered by Codemax AI. How can I assist you with Indian data privacy statutes, DPDP Rules 2025, or CERT-In compliance today?',
+        'Greetings! I am your executive DPO Legal AI Assistant powered by Codemax AI. How can I assist you with Indian data privacy statutes, DPDP Rules 2025, or CERT-In compliance today?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -44,15 +44,30 @@ export const AssistantChatTab: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/chat', {
+      // Call primary MCP endpoint
+      let res = await fetch('/mcp/tools/chat_dpdp_assistant/call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: query }),
       });
 
+      // Fallback to /chat if needed
+      if (!res.ok) {
+        res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: query }),
+        });
+      }
+
       if (res.ok) {
         const data = await res.json();
-        const replyText = data.reply || data.response || data.output;
+        const raw = data.result || data;
+        const replyText =
+          typeof raw === 'string'
+            ? raw
+            : raw.response || raw.reply || raw.output || 'DPDP Assistant processing complete.';
+
         setMessages((prev) => [
           ...prev,
           {
@@ -63,13 +78,12 @@ export const AssistantChatTab: React.FC = () => {
           },
         ]);
       } else {
-        // Fallback intelligent legal response
         setMessages((prev) => [
           ...prev,
           {
             id: (Date.now() + 1).toString(),
             sender: 'assistant',
-            content: `Under India's **DPDP Act 2023** and **DPDP Rules 2025**:\n\n1. **Data Fiduciary Obligations**: Data Fiduciaries must ensure notice and purpose limitation, implement reasonable security safeguards, and issue breach notifications to the Data Protection Board & Data Principals.\n2. **Penalty Exposure**: Up to ₹250 Crore (INR 2,500,000,000) for failure to implement reasonable security safeguards under Schedule 1.\n3. **CERT-In 6-Hour Reporting**: Mandatory cyber security incident reporting to CERT-In within 6 hours of identification.`,
+            content: `Under India's **DPDP Act 2023** and **DPDP Rules 2025**:\n\n1. **Data Fiduciary Obligations**: Data Fiduciaries must ensure notice and purpose limitation, implement reasonable security safeguards, and issue breach notifications to the Data Protection Board & Data Principals.\n2. **Penalty Exposure**: Up to ₹250 Crore (INR 2,500,000,000) for failure to implement reasonable security safeguards under Section 33.\n3. **CERT-In 6-Hour Reporting**: Mandatory cybersecurity incident reporting to CERT-In within 6 hours of identification.`,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           },
         ]);
@@ -80,7 +94,7 @@ export const AssistantChatTab: React.FC = () => {
         {
           id: (Date.now() + 1).toString(),
           sender: 'assistant',
-          content: `Under India's DPDP Act 2023, Data Fiduciaries must comply with notice obligations under Section 5 and implement reasonable security safeguards under Section 8(5). Non-compliance carries penalties up to ₹250 Crore.`,
+          content: `Under India's DPDP Act 2023, Data Fiduciaries must comply with notice obligations under Section 6 and implement reasonable security safeguards under Section 8(5). Non-compliance carries penalties up to ₹250 Crore.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -90,25 +104,25 @@ export const AssistantChatTab: React.FC = () => {
   };
 
   return (
-    <div className="glass-panel p-6 md:p-8 rounded-2xl h-[680px] flex flex-col">
+    <div className="glass-panel p-6 md:p-8 rounded-2xl h-[680px] flex flex-col border-amber-500/30">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 shrink-0">
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-amber-500/20 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-white/10 border border-white/20">
-            <MessageSquare className="w-5 h-5 text-white" />
+          <div className="p-2.5 rounded-xl bg-black border border-amber-400/50 shadow-glow-gold">
+            <MessageSquare className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white font-heading">
-              DPDP AI Chat Assistant
+            <h2 className="text-xl font-bold text-white font-robot">
+              DPO AI Chat Assistant
             </h2>
-            <p className="text-xs text-zinc-400">
-              Interactive legal reasoning powered by Codemax AI & Zep Memory.
+            <p className="text-xs text-amber-200/60 font-mono">
+              Interactive legal reasoning powered by Codemax AI & Zep Statutory Memory.
             </p>
           </div>
         </div>
 
-        <div className="px-3 py-1 text-xs font-semibold rounded-full bg-white/10 border border-white/20 text-white flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-white" />
+        <div className="px-3 py-1 text-xs font-robot font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
           <span>Statutory Memory</span>
         </div>
       </div>
@@ -125,7 +139,7 @@ export const AssistantChatTab: React.FC = () => {
             }`}
           >
             {m.sender === 'assistant' && (
-              <div className="w-8 h-8 rounded-full bg-black border border-white/30 flex items-center justify-center text-white shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-black border border-amber-400/60 flex items-center justify-center text-amber-400 shrink-0 mt-1 shadow-glow-gold">
                 <Bot className="w-4 h-4" />
               </div>
             )}
@@ -133,14 +147,14 @@ export const AssistantChatTab: React.FC = () => {
             <div
               className={`max-w-[85%] md:max-w-[75%] p-4 rounded-2xl text-xs md:text-sm leading-relaxed ${
                 m.sender === 'user'
-                  ? 'bg-white text-black font-medium rounded-br-none shadow-glow-white'
-                  : 'bg-black/80 text-white border border-white/15 rounded-bl-none'
+                  ? 'bg-amber-400 text-black font-robot font-bold rounded-br-none shadow-glow-gold'
+                  : 'bg-black/90 text-amber-100 border border-amber-500/30 rounded-bl-none font-sans'
               }`}
             >
               <div className="whitespace-pre-wrap">{m.content}</div>
               <div
-                className={`text-[10px] mt-2 text-right ${
-                  m.sender === 'user' ? 'text-zinc-600' : 'text-zinc-400'
+                className={`text-[10px] mt-2 text-right font-mono ${
+                  m.sender === 'user' ? 'text-black/70' : 'text-amber-400/60'
                 }`}
               >
                 {m.timestamp}
@@ -148,7 +162,7 @@ export const AssistantChatTab: React.FC = () => {
             </div>
 
             {m.sender === 'user' && (
-              <div className="w-8 h-8 rounded-full bg-white text-black font-bold flex items-center justify-center text-xs shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-amber-400 text-black font-bold font-robot flex items-center justify-center text-xs shrink-0 mt-1 shadow-glow-gold">
                 <User className="w-4 h-4" />
               </div>
             )}
@@ -157,12 +171,12 @@ export const AssistantChatTab: React.FC = () => {
 
         {isLoading && (
           <div className="flex gap-3 justify-start items-center">
-            <div className="w-8 h-8 rounded-full bg-black border border-white/30 flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-full bg-black border border-amber-400/60 flex items-center justify-center text-amber-400">
               <Bot className="w-4 h-4" />
             </div>
-            <div className="p-4 rounded-2xl bg-black/80 border border-white/15 flex items-center gap-2 text-xs text-zinc-400">
-              <Loader2 className="w-4 h-4 animate-spin text-white" />
-              <span>Analyzing Indian Legal Memory...</span>
+            <div className="p-4 rounded-2xl bg-black/90 border border-amber-500/30 flex items-center gap-2 text-xs text-amber-200 font-mono">
+              <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+              <span>Analyzing Indian Legal Memory & Vector Graph...</span>
             </div>
           </div>
         )}
@@ -175,7 +189,7 @@ export const AssistantChatTab: React.FC = () => {
           <button
             key={idx}
             onClick={() => handleSend(s)}
-            className="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/15 text-zinc-300 hover:text-white hover:border-white transition-colors"
+            className="text-[11px] px-3 py-1.5 rounded-full bg-black border border-amber-500/30 text-amber-200 hover:bg-amber-400 hover:text-black hover:border-amber-300 transition-all font-robot cursor-pointer"
           >
             {s}
           </button>
@@ -188,19 +202,19 @@ export const AssistantChatTab: React.FC = () => {
           e.preventDefault();
           handleSend();
         }}
-        className="flex items-center gap-3 pt-3 border-t border-white/10 shrink-0"
+        className="flex items-center gap-3 pt-3 border-t border-amber-500/20 shrink-0"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask any legal compliance question on DPDP Act 2023 or CERT-In..."
-          className="flex-1 px-4 py-3.5 rounded-xl bg-black border border-white/25 text-white text-xs md:text-sm focus:outline-none focus:border-white transition-all"
+          className="flex-1 px-4 py-3.5 rounded-xl bg-black border border-amber-500/30 text-amber-100 text-xs md:text-sm focus:outline-none focus:border-amber-400 transition-all font-sans"
         />
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="p-3.5 rounded-xl bg-white text-black font-bold hover:bg-zinc-200 transition-all disabled:opacity-50 shadow-glow-white shrink-0"
+          className="p-3.5 rounded-xl bg-amber-400 text-black font-robot font-bold hover:bg-amber-300 transition-all disabled:opacity-50 shadow-glow-gold shrink-0 cursor-pointer"
         >
           <Send className="w-4 h-4" />
         </button>

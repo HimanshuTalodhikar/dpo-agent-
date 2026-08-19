@@ -274,6 +274,31 @@ async def list_tools() -> dict[str, Any]:
     }
 
 
+@app.post("/chat")
+async def chat_endpoint(request: Request) -> JSONResponse:
+    """Direct chat endpoint for frontend DPDP assistant."""
+    if _agent is None:
+        raise HTTPException(status_code=503, detail="Agent not initialized")
+    body = await request.json()
+    session = await get_session()
+    try:
+        msg = body.get("message") or body.get("query") or "General DPDP Act inquiry"
+        user_id = body.get("user_id")
+        res = await _agent.chat_dpdp_assistant(
+            session=session,
+            message=msg,
+            user_id=user_id,
+        )
+        return JSONResponse({
+            "success": True,
+            "reply": res.get("response") if isinstance(res, dict) else str(res),
+            "result": res,
+        })
+    finally:
+        if session is not None:
+            await session.close()
+
+
 @app.post("/mcp/tools/{tool_name}/call")
 async def call_tool(
     tool_name: str,
