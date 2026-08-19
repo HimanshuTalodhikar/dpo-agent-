@@ -65,9 +65,16 @@ if [ -z "${SG_ID}" ] || [ "${SG_ID}" = "None" ]; then
     aws ec2 authorize-security-group-ingress \
         --group-id "${SG_ID}" \
         --protocol tcp \
+        --port 443 \
+        --cidr 0.0.0.0/0 \
+        --region "${AWS_REGION}" &>/dev/null || true
+
+    aws ec2 authorize-security-group-ingress \
+        --group-id "${SG_ID}" \
+        --protocol tcp \
         --port 8000 \
         --cidr 0.0.0.0/0 \
-        --region "${AWS_REGION}"
+        --region "${AWS_REGION}" &>/dev/null || true
 
     echo "  -> Created Security Group: ${SG_ID}"
 else
