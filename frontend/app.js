@@ -3,7 +3,9 @@
  * Integrates live with http://cloagent-alb-896741255.ap-south-1.elb.amazonaws.com
  */
 
-const PRIMARY_ALB_URL = "http://cloagent-alb-896741255.ap-south-1.elb.amazonaws.com";
+const PRIMARY_ALB_URL = (window.location.hostname.includes("digiprotect.ai") || window.location.protocol === "https:")
+    ? (window.location.origin.startsWith("http") ? window.location.origin : "https://www.digiprotect.ai")
+    : "http://cloagent-alb-896741255.ap-south-1.elb.amazonaws.com";
 
 // Smart API fetcher with multi-endpoint fallback
 async function callApi(path, bodyData = null, method = "POST") {
@@ -623,3 +625,199 @@ async function handleSendChatMessage(event) {
         botDiv.querySelector(".chat-bubble").innerHTML = `<strong>DPDP AI Assistant:</strong><br>Under Section 13 & 14 of DPDP Act 2023, data privacy grievances must first be submitted to the organization's Grievance Officer. If unaddressed after 30 days, file an official complaint with the Data Protection Board of India.`;
     }
 }
+
+/* ==========================================================================
+   SPACE CANVAS ENGINE — SHOOTING METEORS, ROTATING ASTEROIDS & TWINKLING STARS
+   ========================================================================== */
+class SpaceEngine {
+    constructor() {
+        this.canvas = document.getElementById("space-canvas");
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext("2d");
+        this.stars = [];
+        this.meteors = [];
+        this.asteroids = [];
+        this.width = 0;
+        this.height = 0;
+        
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        window.addEventListener("resize", () => this.resize());
+
+        // 1. Create Twinkling Stars
+        this.stars = [];
+        const starCount = Math.floor((this.width * this.height) / 2400);
+        for (let i = 0; i < starCount; i++) {
+            this.stars.push({
+                x: Math.random() * this.width,
+                y: Math.random() * this.height,
+                radius: Math.random() * 1.6 + 0.4,
+                alpha: Math.random(),
+                speed: Math.random() * 0.02 + 0.005,
+                increasing: Math.random() > 0.5
+            });
+        }
+
+        // 2. Create Floating Asteroids
+        this.asteroids = [];
+        const asteroidCount = Math.min(10, Math.max(4, Math.floor(this.width / 180)));
+        for (let i = 0; i < asteroidCount; i++) {
+            this.asteroids.push(this.createAsteroid());
+        }
+
+        // 3. Periodically Spawn Shooting Meteors
+        setInterval(() => {
+            if (Math.random() < 0.75 && this.meteors.length < 6) {
+                this.meteors.push(this.createMeteor());
+            }
+        }, 1000);
+
+        this.animate();
+    }
+
+    resize() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
+    }
+
+    createMeteor() {
+        const startX = Math.random() * (this.width * 1.2) - this.width * 0.1;
+        const startY = Math.random() * (this.height * 0.4) - 100;
+        const length = Math.random() * 160 + 110;
+        const speed = Math.random() * 9 + 7;
+        const angle = (Math.PI / 180) * (38 + Math.random() * 14);
+
+        return {
+            x: startX,
+            y: startY,
+            dx: Math.cos(angle) * speed,
+            dy: Math.sin(angle) * speed,
+            length: length,
+            thickness: Math.random() * 2.2 + 1.2,
+            opacity: 1,
+            decay: Math.random() * 0.014 + 0.007
+        };
+    }
+
+    createAsteroid() {
+        const radius = Math.random() * 20 + 9;
+        const points = [];
+        const numPoints = Math.floor(Math.random() * 5) + 7;
+        for (let j = 0; j < numPoints; j++) {
+            const angle = (j / numPoints) * Math.PI * 2;
+            const dist = radius * (0.75 + Math.random() * 0.45);
+            points.push({ x: Math.cos(angle) * dist, y: Math.sin(angle) * dist });
+        }
+
+        return {
+            x: Math.random() * this.width,
+            y: Math.random() * this.height,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            rotation: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.007,
+            points: points,
+            radius: radius,
+            opacity: Math.random() * 0.4 + 0.25
+        };
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        // Render Stars
+        for (let star of this.stars) {
+            if (star.increasing) {
+                star.alpha += star.speed;
+                if (star.alpha >= 1) star.increasing = false;
+            } else {
+                star.alpha -= star.speed;
+                if (star.alpha <= 0.1) star.increasing = true;
+            }
+
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+            this.ctx.beginPath();
+            this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+
+        // Render Asteroids
+        for (let ast of this.asteroids) {
+            ast.x += ast.vx;
+            ast.y += ast.vy;
+            ast.rotation += ast.rotSpeed;
+
+            if (ast.x < -60) ast.x = this.width + 60;
+            if (ast.x > this.width + 60) ast.x = -60;
+            if (ast.y < -60) ast.y = this.height + 60;
+            if (ast.y > this.height + 60) ast.y = -60;
+
+            this.ctx.save();
+            this.ctx.translate(ast.x, ast.y);
+            this.ctx.rotate(ast.rotation);
+
+            this.ctx.strokeStyle = `rgba(255, 255, 255, ${ast.opacity})`;
+            this.ctx.fillStyle = `rgba(15, 15, 20, ${ast.opacity * 0.7})`;
+            this.ctx.lineWidth = 1.3;
+
+            this.ctx.beginPath();
+            for (let k = 0; k < ast.points.length; k++) {
+                const pt = ast.points[k];
+                if (k === 0) this.ctx.moveTo(pt.x, pt.y);
+                else this.ctx.lineTo(pt.x, pt.y);
+            }
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.stroke();
+
+            this.ctx.restore();
+        }
+
+        // Render Meteors
+        for (let i = this.meteors.length - 1; i >= 0; i--) {
+            const m = this.meteors[i];
+            m.x += m.dx;
+            m.y += m.dy;
+            m.opacity -= m.decay;
+
+            if (m.opacity <= 0 || m.x > this.width + 250 || m.y > this.height + 250) {
+                this.meteors.splice(i, 1);
+                continue;
+            }
+
+            const tailX = m.x - (m.dx / Math.hypot(m.dx, m.dy)) * m.length;
+            const tailY = m.y - (m.dy / Math.hypot(m.dx, m.dy)) * m.length;
+
+            const grad = this.ctx.createLinearGradient(m.x, m.y, tailX, tailY);
+            grad.addColorStop(0, `rgba(255, 255, 255, ${m.opacity})`);
+            grad.addColorStop(0.3, `rgba(220, 220, 240, ${m.opacity * 0.65})`);
+            grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+            this.ctx.strokeStyle = grad;
+            this.ctx.lineWidth = m.thickness;
+            this.ctx.lineCap = "round";
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(m.x, m.y);
+            this.ctx.lineTo(tailX, tailY);
+            this.ctx.stroke();
+
+            // Meteor Glowing Head
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${m.opacity})`;
+            this.ctx.beginPath();
+            this.ctx.arc(m.x, m.y, m.thickness * 1.6, 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    new SpaceEngine();
+});
