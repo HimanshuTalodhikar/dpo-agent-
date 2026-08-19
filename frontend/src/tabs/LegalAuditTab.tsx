@@ -70,6 +70,16 @@ export const LegalAuditTab: React.FC = () => {
                 recommended_remediation: f.recommended_remediation || f.remediation || 'Remediate under DPDP Act 2023.',
                 evidence_required: Array.isArray(f.evidence_required) ? f.evidence_required : [],
               }))
+            : Array.isArray(raw.prioritized_actions) && raw.prioritized_actions.length > 0
+            ? raw.prioritized_actions.map((act: any, idx: number) => ({
+                rule_code: `DPDP-2023-RULE${idx + 1}`,
+                category: 'Prioritized Audit Action',
+                severity: 'CRITICAL' as ExposureLevel,
+                status: 'NON_COMPLIANT',
+                description: typeof act === 'string' ? act : JSON.stringify(act),
+                recommended_remediation: 'Implement statutory remediation immediately.',
+                evidence_required: ['Compliance Certificate', 'Audit Log'],
+              }))
             : Array.isArray(raw.actionable_steps_array) && raw.actionable_steps_array.length > 0
             ? raw.actionable_steps_array.map((step: any, idx: number) => ({
                 rule_code: raw.legal_sources?.[idx]?.section || `DPDP-2023-SEC${idx + 4}`,
