@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { RobotMascot } from './RobotMascot';
 import {
   Gavel,
   CalendarCheck,
@@ -91,10 +90,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onLaunchTool }) => {
         </motion.div>
       </section>
 
-      {/* Main Interactive Robot Assistant Showcase */}
-      <section className="relative z-10">
-        <RobotMascot />
-      </section>
 
       {/* Executive Capabilities Grid */}
       <section className="relative z-10 space-y-6">

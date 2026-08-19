@@ -5,6 +5,7 @@ import { BackgroundSpaceCanvas } from './components/BackgroundSpaceCanvas';
 import { HeaderNav } from './components/HeaderNav';
 import { LandingHero } from './components/LandingHero';
 import { TabNav } from './components/TabNav';
+import { WalkingAgent } from './components/WalkingAgent';
 import { RiskAnalyzerTab } from './tabs/RiskAnalyzerTab';
 import { RemediationPlannerTab } from './tabs/RemediationPlannerTab';
 import { LegalAuditTab } from './tabs/LegalAuditTab';
@@ -31,9 +32,12 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-black text-amber-100 p-4 md:p-8 max-w-7xl mx-auto selection:bg-amber-400 selection:text-black">
+    <div className="relative min-h-screen bg-black text-amber-100 p-4 md:p-8 max-w-7xl mx-auto selection:bg-amber-400 selection:text-black pb-24">
       {/* 60fps Interactive Golden Space Background */}
       <BackgroundSpaceCanvas />
+
+      {/* Autonomous Webpage Patrol Walking Agent */}
+      <WalkingAgent onTriggerScan={() => setActiveTab('risk')} />
 
       {/* Header with Home Navigation */}
       <HeaderNav
