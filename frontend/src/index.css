@@ -5,31 +5,32 @@
 @layer base {
   body {
     background-color: #000000;
-    color: #ffffff;
+    color: #fef08a;
     font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    letter-spacing: 0.02em;
   }
 }
 
-/* Glassmorphic card styling */
+/* Glassmorphic Dark Yellow card styling */
 .glass-panel {
-  background: rgba(12, 12, 16, 0.85);
+  background: rgba(10, 10, 8, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.95), 0 0 20px rgba(245, 158, 11, 0.1);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 255, 255, 0.15);
+  border-color: rgba(245, 158, 11, 0.65);
+  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.98), 0 0 30px rgba(245, 158, 11, 0.25);
 }
 
-/* Custom Scrollbars */
+/* Custom Gold Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -40,10 +41,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(245, 158, 11, 0.4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(245, 158, 11, 0.8);
 }

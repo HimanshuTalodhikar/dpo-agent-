@@ -180,13 +180,13 @@ export const RiskAnalyzerTab: React.FC = () => {
   const getBadgeStyle = (level: ExposureLevel) => {
     switch (level) {
       case 'CRITICAL':
-        return 'bg-white text-black font-extrabold shadow-glow-white animate-pulse-glow';
+        return 'bg-amber-400 text-black font-extrabold shadow-glow-gold animate-pulse-glow font-robot';
       case 'HIGH':
-        return 'bg-zinc-800 text-white border border-white/40 font-bold';
+        return 'bg-amber-950/80 text-amber-200 border border-amber-500/50 font-bold font-robot';
       case 'MEDIUM':
-        return 'bg-zinc-900 text-zinc-300 border border-zinc-700 font-semibold';
+        return 'bg-amber-950/40 text-amber-300/80 border border-amber-500/30 font-semibold font-robot';
       case 'LOW':
-        return 'bg-zinc-950 text-zinc-400 border border-zinc-800 font-medium';
+        return 'bg-black text-amber-400/60 border border-amber-500/20 font-medium font-robot';
     }
   };
 
@@ -196,17 +196,17 @@ export const RiskAnalyzerTab: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel p-6 md:p-8 rounded-2xl"
+        className="glass-panel p-6 md:p-8 rounded-2xl border-amber-500/30"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2.5 rounded-xl bg-white/10 border border-white/20">
-            <Gavel className="w-5 h-5 text-white" />
+          <div className="p-2.5 rounded-xl bg-black border border-amber-400/50 shadow-glow-gold">
+            <Gavel className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white font-heading">
+            <h2 className="text-xl font-bold text-white font-robot">
               Evaluate Legal & Compliance Risk
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-amber-200/60 font-mono">
               Assess exposure under DPDP Act 2023, DPDP Rules 2025, CERT-In, and IT Act 2000.
             </p>
           </div>
@@ -214,7 +214,7 @@ export const RiskAnalyzerTab: React.FC = () => {
 
         {/* Quick Scenario Chips */}
         <div className="mb-6">
-          <span className="block text-xs font-semibold text-zinc-400 mb-2.5">
+          <span className="block text-xs font-semibold text-amber-300/80 mb-2.5 font-mono">
             Quick Compliance Scenarios:
           </span>
           <div className="flex flex-wrap gap-2">
@@ -225,9 +225,9 @@ export const RiskAnalyzerTab: React.FC = () => {
                   key={sc.id}
                   type="button"
                   onClick={() => setQuery(sc.text)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/20 text-xs font-medium text-white hover:bg-white hover:text-black hover:border-white transition-all shadow-sm group cursor-pointer"
+                  className="flex items-center gap-2 px-3 py-2 rounded-full bg-black/80 border border-amber-500/40 text-xs font-robot text-amber-200 hover:bg-amber-400 hover:text-black hover:border-amber-300 transition-all shadow-sm group cursor-pointer"
                 >
-                  <Icon className="w-3.5 h-3.5 text-zinc-400 group-hover:text-black transition-colors" />
+                  <Icon className="w-3.5 h-3.5 text-amber-400 group-hover:text-black transition-colors" />
                   <span>{sc.title}</span>
                 </button>
               );
@@ -240,7 +240,7 @@ export const RiskAnalyzerTab: React.FC = () => {
           <div>
             <label
               htmlFor="query-input"
-              className="block text-sm font-semibold text-white mb-2"
+              className="block text-sm font-bold text-white mb-2 font-robot"
             >
               Describe Corporate Compliance Situation or Practice:
             </label>
@@ -250,14 +250,14 @@ export const RiskAnalyzerTab: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="e.g. Our fintech startup in Bengaluru wants to implement continuous keystroke logging and screen recording for remote engineers..."
-              className="w-full p-4 rounded-xl bg-black border border-white/25 text-white text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all resize-y min-h-[160px] leading-relaxed"
+              className="w-full p-4 rounded-xl bg-black border border-amber-500/30 text-amber-100 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all resize-y min-h-[160px] leading-relaxed font-sans"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading || !query.trim()}
-            className="flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-black font-heading font-bold text-base shadow-glow-white hover:bg-zinc-200 active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-amber-400 text-black font-robot font-extrabold text-base shadow-glow-gold hover:bg-amber-300 active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {isLoading ? (
               <>

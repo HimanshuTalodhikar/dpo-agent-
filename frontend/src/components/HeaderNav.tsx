@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Cpu, ExternalLink, Sparkles } from 'lucide-react';
+import { ShieldCheck, Cpu, ExternalLink, Sparkles, Bot } from 'lucide-react';
 
 interface HeaderNavProps {
   serverStatus: 'healthy' | 'checking' | 'error';
@@ -7,18 +7,18 @@ interface HeaderNavProps {
 
 export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus }) => {
   return (
-    <header className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:px-8 mb-6 glass-panel rounded-2xl">
+    <header className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:px-8 mb-6 glass-panel rounded-2xl border-amber-500/30">
       {/* Brand & Identity */}
       <div className="flex items-center gap-3">
-        <div className="w-11 h-11 rounded-xl bg-black border border-white/30 flex items-center justify-center shadow-glow-white">
-          <ShieldCheck className="w-6 h-6 text-white" />
+        <div className="w-11 h-11 rounded-xl bg-black border border-amber-400/50 flex items-center justify-center shadow-glow-gold">
+          <ShieldCheck className="w-6 h-6 text-amber-400" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white font-heading">
-              DPDP AI Agent
+            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-white font-robot uppercase">
+              DPDP <span className="text-amber-400">AI AGENT</span>
             </h1>
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-white/10 text-white border border-white/20">
+            <span className="px-2 py-0.5 text-xs font-robot font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
               v2.0 PRO
             </span>
           </div>
@@ -29,19 +29,19 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus }) => {
       </div>
 
       {/* Center Status Indicators */}
-      <div className="flex items-center gap-4 text-xs">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/15">
+      <div className="flex items-center gap-4 text-xs font-mono">
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/80 border border-amber-500/30">
           <span
             className={`w-2 h-2 rounded-full ${
               serverStatus === 'healthy'
-                ? 'bg-emerald-400 animate-pulse'
+                ? 'bg-amber-400 animate-pulse'
                 : serverStatus === 'checking'
-                ? 'bg-amber-400 animate-ping'
+                ? 'bg-yellow-300 animate-ping'
                 : 'bg-rose-500'
             }`}
           />
-          <span className="text-zinc-300 font-medium">
-            AWS ECS Fargate: <strong className="text-white">Active</strong>
+          <span className="text-zinc-300">
+            AWS ECS Fargate: <strong className="text-amber-400 font-bold">Active</strong>
           </span>
         </div>
 
@@ -49,9 +49,9 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus }) => {
           href="https://www.digiprotect.ai"
           target="_blank"
           rel="noreferrer"
-          className="hidden sm:flex items-center gap-1.5 text-zinc-400 hover:text-white transition-colors"
+          className="hidden sm:flex items-center gap-1.5 text-zinc-400 hover:text-amber-300 transition-colors"
         >
-          <Cpu className="w-3.5 h-3.5" />
+          <Cpu className="w-3.5 h-3.5 text-amber-400" />
           <span>digiprotect.ai</span>
           <ExternalLink className="w-3 h-3 opacity-60" />
         </a>
@@ -59,19 +59,19 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ serverStatus }) => {
 
       {/* User / Org Profile */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/15">
-          <div className="w-7 h-7 rounded-full bg-black border border-white/40 flex items-center justify-center text-xs font-bold text-white">
+        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30">
+          <div className="w-7 h-7 rounded-full bg-black border border-amber-400 flex items-center justify-center text-xs font-bold text-amber-400 font-robot">
             FS
           </div>
           <div className="text-left hidden lg:block">
-            <div className="text-xs font-semibold text-white leading-tight">
+            <div className="text-xs font-bold text-white leading-tight font-heading">
               Fintech Solutions Ltd (India)
             </div>
-            <div className="text-[10px] text-zinc-400">Chief Legal Officer</div>
+            <div className="text-[10px] text-amber-400/80 font-mono">Chief Legal Officer</div>
           </div>
         </div>
 
-        <div className="px-3 py-1.5 text-xs font-semibold rounded-full bg-white text-black flex items-center gap-1.5 shadow-glow-white">
+        <div className="px-3.5 py-1.5 text-xs font-robot font-bold rounded-full bg-amber-400 text-black flex items-center gap-1.5 shadow-glow-gold">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Codemax AI</span>
         </div>

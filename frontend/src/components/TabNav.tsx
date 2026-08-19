@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { TabType } from '../types';
 import {
   Gavel,
-  Wrench,
+  CalendarCheck,
   Scale,
-  Database,
-  FilePlus,
+  Search,
+  FileCheck,
   MessageSquare,
   Plug,
 } from 'lucide-react';
@@ -17,18 +17,18 @@ interface TabNavProps {
 }
 
 const TABS: { id: TabType; label: string; icon: React.FC<{ className?: string }> }[] = [
-  { id: 'risk', label: 'Legal Risk Analyzer', icon: Gavel },
-  { id: 'remediation', label: '30-Day Remediation Plan', icon: Wrench },
+  { id: 'risk', label: 'Risk Analyzer', icon: Gavel },
+  { id: 'remediation', label: 'Remediation Plan', icon: CalendarCheck },
   { id: 'audit', label: 'Legal Audit Suite', icon: Scale },
-  { id: 'search', label: 'Statutory Knowledge Base', icon: Database },
-  { id: 'ingest', label: 'Ingest Statutory Acts', icon: FilePlus },
-  { id: 'chat', label: 'DPDP Assistant Chat', icon: MessageSquare },
-  { id: 'mcp', label: 'Claude Desktop / MCP', icon: Plug },
+  { id: 'search', label: 'Knowledge Graph', icon: Search },
+  { id: 'ingest', label: 'Act & Rule Ingestor', icon: FileCheck },
+  { id: 'chat', label: 'DPDP Assistant', icon: MessageSquare },
+  { id: 'mcp', label: 'Claude / MCP Connect', icon: Plug },
 ];
 
 export const TabNav: React.FC<TabNavProps> = ({ activeTab, onSelectTab }) => {
   return (
-    <nav className="relative z-10 flex items-center gap-2 p-1.5 mb-8 glass-panel rounded-2xl overflow-x-auto no-scrollbar">
+    <nav className="relative z-10 flex items-center justify-start md:justify-center gap-1.5 p-2 mb-8 glass-panel rounded-2xl overflow-x-auto border-amber-500/30">
       {TABS.map((tab) => {
         const Icon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -37,19 +37,23 @@ export const TabNav: React.FC<TabNavProps> = ({ activeTab, onSelectTab }) => {
           <button
             key={tab.id}
             onClick={() => onSelectTab(tab.id)}
-            className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-heading text-sm font-semibold whitespace-nowrap transition-colors z-10 ${
-              isActive ? 'text-black' : 'text-zinc-400 hover:text-white'
+            className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 shrink-0 font-robot cursor-pointer ${
+              isActive
+                ? 'text-black font-extrabold'
+                : 'text-zinc-400 hover:text-amber-300 hover:bg-amber-400/10'
             }`}
           >
             {isActive && (
               <motion.div
                 layoutId="activeTabPill"
-                className="absolute inset-0 bg-white rounded-xl shadow-glow-white -z-10"
-                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                className="absolute inset-0 bg-amber-400 rounded-xl shadow-glow-gold"
+                transition={{ type: 'spring', stiffness: 450, damping: 35 }}
               />
             )}
-            <Icon className={`w-4 h-4 ${isActive ? 'text-black' : 'text-zinc-400'}`} />
-            <span>{tab.label}</span>
+            <span className="relative z-10 flex items-center gap-2">
+              <Icon className={`w-4 h-4 ${isActive ? 'text-black' : 'text-amber-400'}`} />
+              <span>{tab.label}</span>
+            </span>
           </button>
         );
       })}

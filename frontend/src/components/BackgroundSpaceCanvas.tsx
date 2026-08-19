@@ -7,28 +7,17 @@ interface Meteor {
   speed: number;
   angle: number;
   opacity: number;
-  tailOpacity: number;
-  width: number;
 }
 
 interface Asteroid {
   x: number;
   y: number;
   radius: number;
-  points: number[];
-  rotation: number;
   rotSpeed: number;
-  dx: number;
-  dy: number;
-  opacity: number;
-}
-
-interface Star {
-  x: number;
-  y: number;
-  radius: number;
-  opacity: number;
-  twinkleSpeed: number;
+  angle: number;
+  vx: number;
+  vy: number;
+  points: { x: number; y: number }[];
 }
 
 export const BackgroundSpaceCanvas: React.FC = () => {
@@ -37,6 +26,7 @@ export const BackgroundSpaceCanvas: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -51,95 +41,66 @@ export const BackgroundSpaceCanvas: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // Initialize Stars
-    const stars: Star[] = Array.from({ length: 160 }, () => ({
+    // Stars (Glowing Amber/Yellow Twinkling)
+    const starCount = 180;
+    const stars = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.8 + 0.2,
-      twinkleSpeed: (Math.random() - 0.5) * 0.015,
+      size: Math.random() * 1.6 + 0.4,
+      alpha: Math.random() * 0.8 + 0.2,
+      delta: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
     }));
 
-    // Initialize Asteroids
-    const createAsteroid = (): Asteroid => {
-      const radius = Math.random() * 16 + 10;
-      const numVertices = Math.floor(Math.random() * 4) + 6;
-      const points = Array.from({ length: numVertices }, () => 0.7 + Math.random() * 0.6);
+    // Meteors (Amber / Dark Yellow Trails)
+    const meteors: Meteor[] = Array.from({ length: 6 }, () => createMeteor(width, height));
+
+    function createMeteor(w: number, h: number): Meteor {
+      return {
+        x: Math.random() * w * 1.5 - w * 0.25,
+        y: Math.random() * -200,
+        length: Math.random() * 90 + 50,
+        speed: Math.random() * 6 + 4,
+        angle: Math.PI / 4 + (Math.random() * 0.1 - 0.05),
+        opacity: Math.random() * 0.8 + 0.2,
+      };
+    }
+
+    // 3D Wireframe Asteroids (Golden Cybernetic Rocks)
+    const asteroidCount = 7;
+    const asteroids: Asteroid[] = Array.from({ length: asteroidCount }, () => {
+      const radius = Math.random() * 24 + 14;
+      const numPoints = Math.floor(Math.random() * 4) + 6;
+      const points = [];
+      for (let i = 0; i < numPoints; i++) {
+        const a = (i / numPoints) * Math.PI * 2;
+        const r = radius * (0.7 + Math.random() * 0.6);
+        points.push({ x: Math.cos(a) * r, y: Math.sin(a) * r });
+      }
       return {
         x: Math.random() * width,
         y: Math.random() * height,
         radius,
+        rotSpeed: (Math.random() - 0.5) * 0.012,
+        angle: Math.random() * Math.PI * 2,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
         points,
-        rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.008,
-        dx: (Math.random() - 0.5) * 0.3,
-        dy: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.35 + 0.15,
       };
-    };
-    const asteroids: Asteroid[] = Array.from({ length: 14 }, createAsteroid);
-
-    // Initialize Meteors
-    const createMeteor = (): Meteor => ({
-      x: Math.random() * width * 1.5 - width * 0.25,
-      y: -50,
-      length: Math.random() * 120 + 80,
-      speed: Math.random() * 8 + 6,
-      angle: Math.PI / 4 + (Math.random() - 0.5) * 0.1,
-      opacity: Math.random() * 0.8 + 0.2,
-      tailOpacity: Math.random() * 0.5 + 0.3,
-      width: Math.random() * 1.8 + 1,
     });
-    const meteors: Meteor[] = Array.from({ length: 4 }, createMeteor);
 
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
+    const draw = () => {
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, width, height);
 
-      // Render Twinkling Stars
+      // Render Stars
       stars.forEach((star) => {
-        star.opacity += star.twinkleSpeed;
-        if (star.opacity > 0.95 || star.opacity < 0.15) {
-          star.twinkleSpeed = -star.twinkleSpeed;
-        }
+        star.alpha += star.delta;
+        if (star.alpha <= 0.2 || star.alpha >= 1) star.delta *= -1;
+
+        ctx.fillStyle = `rgba(245, 158, 11, ${star.alpha})`;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity.toFixed(2)})`;
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
-      });
-
-      // Render Floating Asteroids
-      asteroids.forEach((ast) => {
-        ast.x += ast.dx;
-        ast.y += ast.dy;
-        ast.rotation += ast.rotSpeed;
-
-        if (ast.x < -40) ast.x = width + 40;
-        if (ast.x > width + 40) ast.x = -40;
-        if (ast.y < -40) ast.y = height + 40;
-        if (ast.y > height + 40) ast.y = -40;
-
-        ctx.save();
-        ctx.translate(ast.x, ast.y);
-        ctx.rotate(ast.rotation);
-        ctx.beginPath();
-
-        const numPoints = ast.points.length;
-        for (let i = 0; i < numPoints; i++) {
-          const angle = (i / numPoints) * Math.PI * 2;
-          const r = ast.radius * ast.points[i];
-          const px = Math.cos(angle) * r;
-          const py = Math.sin(angle) * r;
-          if (i === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        }
-        ctx.closePath();
-        ctx.strokeStyle = `rgba(255, 255, 255, ${ast.opacity.toFixed(2)})`;
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        ctx.fillStyle = `rgba(15, 15, 20, ${(ast.opacity * 0.6).toFixed(2)})`;
-        ctx.fill();
-        ctx.restore();
       });
 
       // Render Meteors
@@ -147,39 +108,66 @@ export const BackgroundSpaceCanvas: React.FC = () => {
         m.x += Math.cos(m.angle) * m.speed;
         m.y += Math.sin(m.angle) * m.speed;
 
-        if (m.y > height + 100 || m.x > width + 100) {
-          meteors[idx] = createMeteor();
+        if (m.y > height + 200 || m.x > width + 200) {
+          meteors[idx] = createMeteor(width, height);
         }
 
-        const tailX = m.x - Math.cos(m.angle) * m.length;
-        const tailY = m.y - Math.sin(m.angle) * m.length;
-
-        const grad = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${m.opacity})`);
-        grad.addColorStop(0.3, `rgba(220, 220, 240, ${m.tailOpacity * 0.7})`);
+        const grad = ctx.createLinearGradient(
+          m.x,
+          m.y,
+          m.x - Math.cos(m.angle) * m.length,
+          m.y - Math.sin(m.angle) * m.length
+        );
+        grad.addColorStop(0, `rgba(253, 224, 71, ${m.opacity})`);
+        grad.addColorStop(0.4, `rgba(245, 158, 11, ${m.opacity * 0.6})`);
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.moveTo(m.x, m.y);
-        ctx.lineTo(tailX, tailY);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = m.width;
+        ctx.lineTo(
+          m.x - Math.cos(m.angle) * m.length,
+          m.y - Math.sin(m.angle) * m.length
+        );
         ctx.stroke();
-
-        // Meteor Head Glow
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.width * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${m.opacity})`;
-        ctx.shadowColor = '#ffffff';
-        ctx.shadowBlur = 12;
-        ctx.fill();
-        ctx.shadowBlur = 0;
       });
 
-      animId = requestAnimationFrame(render);
+      // Render Asteroids
+      asteroids.forEach((ast) => {
+        ast.x += ast.vx;
+        ast.y += ast.vy;
+        ast.angle += ast.rotSpeed;
+
+        if (ast.x < -50) ast.x = width + 50;
+        if (ast.x > width + 50) ast.x = -50;
+        if (ast.y < -50) ast.y = height + 50;
+        if (ast.y > height + 50) ast.y = -50;
+
+        ctx.save();
+        ctx.translate(ast.x, ast.y);
+        ctx.rotate(ast.angle);
+
+        ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)';
+        ctx.lineWidth = 1.2;
+        ctx.fillStyle = 'rgba(20, 18, 10, 0.6)';
+
+        ctx.beginPath();
+        ast.points.forEach((p, i) => {
+          if (i === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        });
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+      });
+
+      animId = requestAnimationFrame(draw);
     };
 
-    render();
+    draw();
 
     return () => {
       window.removeEventListener('resize', handleResize);

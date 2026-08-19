@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TabType } from './types';
 import { BackgroundSpaceCanvas } from './components/BackgroundSpaceCanvas';
 import { HeaderNav } from './components/HeaderNav';
+import { RobotMascot } from './components/RobotMascot';
 import { TabNav } from './components/TabNav';
 import { RiskAnalyzerTab } from './tabs/RiskAnalyzerTab';
 import { RemediationPlannerTab } from './tabs/RemediationPlannerTab';
@@ -30,12 +31,15 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-black text-white p-4 md:p-8 max-w-7xl mx-auto selection:bg-white selection:text-black">
-      {/* 60fps Interactive Space Background */}
+    <div className="relative min-h-screen bg-black text-amber-100 p-4 md:p-8 max-w-7xl mx-auto selection:bg-amber-400 selection:text-black">
+      {/* 60fps Interactive Golden Space Background */}
       <BackgroundSpaceCanvas />
 
       {/* Header */}
       <HeaderNav serverStatus={serverStatus} />
+
+      {/* Main Landing Mascot: Interactive DPDP Robot Assistant */}
+      <RobotMascot />
 
       {/* Tab Navigation */}
       <TabNav activeTab={activeTab} onSelectTab={setActiveTab} />
@@ -62,11 +66,11 @@ export const App: React.FC = () => {
       </main>
 
       {/* Executive Footer */}
-      <footer className="relative z-10 mt-16 py-8 border-t border-white/10 text-center text-xs text-zinc-500">
+      <footer className="relative z-10 mt-16 py-8 border-t border-amber-500/20 text-center text-xs text-amber-200/60 font-mono">
         <p>
           DPDP AI Agent v2.0 PRO — Grounded Legal Reasoning under India's Digital Personal Data Protection Act 2023 & DPDP Rules 2025.
         </p>
-        <p className="mt-1 font-mono text-[11px] text-zinc-600">
+        <p className="mt-1 text-[11px] text-amber-400/80">
           Powered by Codemax AI & Zep Agent Memory • Deployed on AWS ECS Fargate
         </p>
       </footer>
