@@ -104,7 +104,7 @@ export const RobotMascot: React.FC = () => {
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 text-[11px] font-bold font-robot uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
               <Bot className="w-3.5 h-3.5 text-amber-400" />
-              <span>DPDP Cyber Bot v2.0</span>
+              <span>DPO Cyber Bot v2.0</span>
             </span>
             <span className="text-[11px] font-mono text-zinc-400">Status: Active Scan</span>
           </div>

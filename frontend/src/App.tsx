@@ -71,7 +71,7 @@ export const App: React.FC = () => {
       {/* Executive Footer */}
       <footer className="relative z-10 mt-16 py-8 border-t border-amber-500/20 text-center text-xs text-amber-200/60 font-mono">
         <p>
-          DPDP AI Agent v2.0 PRO — Grounded Legal Reasoning under India's Digital Personal Data Protection Act 2023 & DPDP Rules 2025.
+          DPO Agent v2.0 PRO — Grounded Legal Reasoning under India's Digital Personal Data Protection Act 2023 & DPDP Rules 2025.
         </p>
         <p className="mt-1 text-[11px] text-amber-400/80">
           Powered by Codemax AI & Zep Agent Memory • Deployed on AWS ECS Fargate
