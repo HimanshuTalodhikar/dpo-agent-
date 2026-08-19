@@ -386,7 +386,8 @@ async def call_tool(
                     "result": report.model_dump(mode="json"),
                 })
             finally:
-                await session.close()
+                if session is not None:
+                    await session.close()
 
         elif tool_name == "search_knowledge_graph":
             if _graph_service is None:

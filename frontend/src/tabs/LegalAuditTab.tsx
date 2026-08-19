@@ -57,10 +57,10 @@ export const LegalAuditTab: React.FC = () => {
             ? 'APPROVE_WITH_CONDITIONS'
             : 'APPROVE') as any,
           confidence_score: typeof raw.confidence_score === 'number' ? raw.confidence_score : typeof raw.confidence === 'number' ? raw.confidence : 0.88,
-          summary_executive: raw.summary_executive || raw.summary || 'Statutory legal audit completed successfully under DPDP Act 2023 & IT Act 2000.',
+          summary_executive: raw.summary_executive || raw.summary || raw.legal_rationale || 'Statutory legal audit completed successfully under DPDP Act 2023 & IT Act 2000.',
           key_statutory_violations: Array.isArray(raw.key_statutory_violations) ? raw.key_statutory_violations : [],
           max_penalty_exposure_inr: raw.max_penalty_exposure_inr || raw.penalty_exposure || '₹250,000,000 (INR 250 Cr under DPDP Act Schedule 1)',
-          findings: Array.isArray(raw.findings)
+          findings: Array.isArray(raw.findings) && raw.findings.length > 0
             ? raw.findings.map((f: any) => ({
                 rule_code: f.rule_code || f.code || 'DPDP-2023-SEC6',
                 category: f.category || 'Consent & Security Architecture',
@@ -69,6 +69,16 @@ export const LegalAuditTab: React.FC = () => {
                 description: f.description || f.finding || 'Statutory compliance gap identified.',
                 recommended_remediation: f.recommended_remediation || f.remediation || 'Remediate under DPDP Act 2023.',
                 evidence_required: Array.isArray(f.evidence_required) ? f.evidence_required : [],
+              }))
+            : Array.isArray(raw.actionable_steps_array) && raw.actionable_steps_array.length > 0
+            ? raw.actionable_steps_array.map((step: any, idx: number) => ({
+                rule_code: raw.legal_sources?.[idx]?.section || `DPDP-2023-SEC${idx + 4}`,
+                category: 'Statutory Obligation',
+                severity: (raw.exposure_level || 'HIGH') as ExposureLevel,
+                status: 'NON_COMPLIANT',
+                description: typeof step === 'string' ? step : JSON.stringify(step),
+                recommended_remediation: 'Implement under Section 6 DPDP Act 2023 & CERT-In Section 70B.',
+                evidence_required: ['Statutory Notice Screenshot', 'DPO Audit Certificate'],
               }))
             : [
                 {
