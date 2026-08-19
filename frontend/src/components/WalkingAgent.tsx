@@ -72,12 +72,12 @@ export const WalkingAgent: React.FC<WalkingAgentProps> = ({ onTriggerScan }) => 
 
   return (
     <div
-      className="fixed bottom-6 z-50 pointer-events-auto transition-transform duration-75 ease-linear select-none"
+      className="fixed bottom-4 z-40 pointer-events-none transition-transform duration-75 ease-linear select-none"
       style={{ left: `${posX}px` }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative group">
+      <div className="relative group pointer-events-auto">
         {/* Floating Patrol Speech Bubble */}
         <AnimatePresence mode="wait">
           <motion.div
