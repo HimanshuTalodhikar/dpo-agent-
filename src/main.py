@@ -602,11 +602,19 @@ async def api_info() -> dict[str, Any]:
         },
     }
 
-# Mount static frontend application
+# Mount static frontend application with no-cache headers
+class NoCacheStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope: Any) -> Response:
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 if not os.path.exists(frontend_path):
     frontend_path = "frontend"
 
 if os.path.exists(frontend_path):
-    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+    app.mount("/", NoCacheStaticFiles(directory=frontend_path, html=True), name="frontend")
 
